@@ -9,46 +9,53 @@ interface IntroLoaderProps {
 
 export default function IntroLoader({ onComplete }: IntroLoaderProps) {
   const [progress, setProgress] = useState(0);
-  const [isExiting, setIsExiting] = useState(false);
+  const [phase, setPhase] = useState<'loading' | 'filled' | 'exiting' | 'done'>('loading');
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Block scrolling while intro is visible
   useEffect(() => {
-    // Simulate loading with accelerating progress
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
+
+  useEffect(() => {
     let current = 0;
     const interval = setInterval(() => {
-      // Accelerate towards the end
       const increment = current < 60 ? 1.2 : current < 85 ? 2.5 : 4;
       current = Math.min(current + increment, 100);
       setProgress(current);
 
       if (current >= 100) {
         clearInterval(interval);
-        // Hold at 100% for a beat, then exit
+        setTimeout(() => setPhase('filled'), 200);
+        setTimeout(() => setPhase('exiting'), 800);
         setTimeout(() => {
-          setIsExiting(true);
-          // Wait for exit animation to finish
-          setTimeout(() => {
-            onComplete();
-          }, 1200);
-        }, 400);
+          setPhase('done');
+          document.body.style.overflow = '';
+          onComplete();
+        }, 2000);
       }
     }, 40);
 
     return () => clearInterval(interval);
   }, [onComplete]);
 
+  if (phase === 'done') return null;
+
+  const phaseClass =
+    phase === 'filled' ? styles.filled :
+    phase === 'exiting' ? styles.exiting : '';
+
   return (
     <div
       ref={containerRef}
-      className={`${styles.intro} ${isExiting ? styles.exiting : ''}`}
+      className={`${styles.intro} ${phaseClass}`}
     >
-      {/* Subtle background texture grain */}
       <div className={styles.grain} />
-
-      {/* Japanese accent — top right */}
       <span className={styles.kanjiTop}>空落</span>
 
-      {/* Main SKYFALL text with ink fill */}
       <div className={styles.wordContainer}>
         <svg
           className={styles.skyfallSvg}
@@ -56,7 +63,6 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
           preserveAspectRatio="xMidYMid meet"
         >
           <defs>
-            {/* Clip path for the ink fill — rises from bottom */}
             <clipPath id="ink-fill-clip">
               <rect
                 x="0"
@@ -65,8 +71,6 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
                 height={140}
               />
             </clipPath>
-
-            {/* Slight turbulence for organic ink edge */}
             <filter id="ink-edge">
               <feTurbulence
                 type="fractalNoise"
@@ -84,21 +88,11 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
             </filter>
           </defs>
 
-          {/* Outlined (hollow) text — always visible */}
-          <text
-            x="450"
-            y="110"
-            textAnchor="middle"
-            className={styles.outlineText}
-          >
+          <text x="450" y="110" textAnchor="middle" className={styles.outlineText}>
             SKYFALL
           </text>
-
-          {/* Filled text — clipped by rising ink */}
           <text
-            x="450"
-            y="110"
-            textAnchor="middle"
+            x="450" y="110" textAnchor="middle"
             className={styles.filledText}
             clipPath="url(#ink-fill-clip)"
             filter="url(#ink-edge)"
@@ -107,14 +101,12 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
           </text>
         </svg>
 
-        {/* Brush stroke underline */}
         <div
           className={styles.brushLine}
           style={{ width: `${Math.min(progress * 1.1, 100)}%` }}
         />
       </div>
 
-      {/* Loading percentage */}
       <div className={styles.progressInfo}>
         <span className={styles.progressNum}>
           {String(Math.floor(progress)).padStart(3, '0')}
@@ -122,7 +114,6 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
         <span className={styles.progressLabel}>%</span>
       </div>
 
-      {/* Bottom tagline */}
       <p className={styles.tagline}>
         Akshan Khan — Developer &amp; Visual Artist
       </p>

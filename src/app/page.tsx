@@ -14,14 +14,13 @@ const SlideCarousel = dynamic(
 );
 
 export default function Home() {
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [introComplete, setIntroComplete] = useState(false);
 
   return (
     <main>
-      {!isLoaded && <IntroLoader onComplete={() => setIsLoaded(true)} />}
-      <div style={{ visibility: isLoaded ? 'visible' : 'hidden' }}>
-        <SlideCarousel />
-      </div>
+      {!introComplete && <IntroLoader onComplete={() => setIntroComplete(true)} />}
+      {/* Carousel always renders at full size so GSAP can measure — intro covers it */}
+      <SlideCarousel />
     </main>
   );
 }

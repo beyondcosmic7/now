@@ -1,12 +1,13 @@
 .wrapper {
   position: relative;
   width: 100%;
-  /* Only the wrapper clips horizontally — individual slides stay overflow:visible */
+  height: 100vh;
   overflow: hidden;
 }
 
 .track {
   display: flex;
+  height: 100%;
   width: fit-content;
   will-change: transform;
 }

@@ -7,17 +7,42 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  transition: all 1.2s cubic-bezier(0.76, 0, 0.24, 1);
   overflow: hidden;
+  transition: opacity 0.8s cubic-bezier(0.76, 0, 0.24, 1),
+              transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
-/* Exit animation — ink drains upward */
+/* Phase: filled — text pulses */
+.filled .wordContainer {
+  animation: fillPulse 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+@keyframes fillPulse {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+/* Phase: exiting — the whole intro lifts up and fades */
 .exiting {
-  clip-path: inset(0 0 100% 0);
   opacity: 0;
+  transform: translateY(-30px) scale(0.98);
+  pointer-events: none;
 }
 
-/* Film grain texture overlay */
+.exiting .wordContainer {
+  animation: contentLiftOut 0.8s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+@keyframes contentLiftOut {
+  to {
+    opacity: 0;
+    transform: translateY(-40px) scale(0.95);
+    filter: blur(6px);
+  }
+}
+
+/* Film grain */
 .grain {
   position: absolute;
   inset: 0;
@@ -25,9 +50,10 @@
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
   background-size: 128px;
   pointer-events: none;
+  z-index: 1;
 }
 
-/* Japanese kanji — top right corner */
+/* Japanese kanji */
 .kanjiTop {
   position: absolute;
   top: 40px;
@@ -37,17 +63,19 @@
   writing-mode: vertical-rl;
   letter-spacing: 0.3em;
   color: #8B2500;
-  opacity: 0.4;
-  animation: inkDripIn 1.5s cubic-bezier(0.25, 0.1, 0.25, 1) 0.3s both;
+  opacity: 0;
+  z-index: 2;
+  animation: inkDripIn 1.5s cubic-bezier(0.25, 0.1, 0.25, 1) 0.3s forwards;
 }
 
-/* ===== SKYFALL SVG TEXT ===== */
+/* SKYFALL SVG */
 .wordContainer {
   position: relative;
   width: min(85vw, 900px);
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 2;
 }
 
 .skyfallSvg {
@@ -56,7 +84,6 @@
   overflow: visible;
 }
 
-/* Hollow outline stroke */
 .outlineText {
   font-family: 'Noto Serif JP', 'Georgia', serif;
   font-size: 130px;
@@ -67,7 +94,6 @@
   stroke-width: 1;
 }
 
-/* Filled ink — revealed by clipPath */
 .filledText {
   font-family: 'Noto Serif JP', 'Georgia', serif;
   font-size: 130px;
@@ -76,7 +102,7 @@
   fill: #FAF8F5;
 }
 
-/* Brush stroke underline */
+/* Brush underline */
 .brushLine {
   height: 2px;
   background: linear-gradient(
@@ -91,7 +117,7 @@
   opacity: 0.6;
 }
 
-/* ===== Progress counter ===== */
+/* Progress */
 .progressInfo {
   position: absolute;
   bottom: 60px;
@@ -99,6 +125,7 @@
   display: flex;
   align-items: baseline;
   gap: 2px;
+  z-index: 2;
 }
 
 .progressNum {
@@ -116,7 +143,7 @@
   color: #505050;
 }
 
-/* ===== Bottom tagline ===== */
+/* Tagline */
 .tagline {
   position: absolute;
   bottom: 40px;
@@ -127,17 +154,18 @@
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: #505050;
-  animation: inkDripIn 1s ease 0.6s both;
+  opacity: 0;
+  z-index: 2;
+  animation: inkDripIn 1s ease 0.6s forwards;
 }
 
-/* ===== Keyframes ===== */
 @keyframes inkDripIn {
   from {
     opacity: 0;
     transform: translateY(-10px);
   }
   to {
-    opacity: 0.4;
+    opacity: 0.5;
     transform: translateY(0);
   }
 }
