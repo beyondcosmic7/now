@@ -1,0 +1,50 @@
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(50px);
+  z-index: var(--z-blob);
+  pointer-events: none;
+  will-change: transform;
+  animation: float 22s ease-in-out infinite;
+  opacity: 0.55;
+}
+
+/* 墨 Ink wash — dark rust glow based on #8B2500 */
+.pink {
+  background: radial-gradient(
+    circle,
+    hsla(11, 100%, 27%, 0.4) 0%,
+    hsla(11, 80%, 22%, 0.18) 50%,
+    hsla(11, 60%, 18%, 0) 100%
+  );
+}
+
+/* 茶 Warm charcoal wash based on #2C2C2C / #505050 */
+.peach {
+  background: radial-gradient(
+    circle,
+    hsla(0, 0%, 20%, 0.35) 0%,
+    hsla(0, 0%, 17%, 0.15) 50%,
+    hsla(0, 0%, 14%, 0) 100%
+  );
+}
+
+.small {
+  width: 140px;
+  height: 140px;
+}
+
+.medium {
+  width: 260px;
+  height: 260px;
+}
+
+.large {
+  width: 400px;
+  height: 400px;
+}
+
+.xlarge {
+  width: 550px;
+  height: 550px;
+}

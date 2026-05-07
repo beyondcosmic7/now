@@ -1,0 +1,37 @@
+.badgeContainer {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rotatingText {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  animation: rotate 25s linear infinite;
+}
+
+.rotatingText text {
+  font-family: var(--font-accent);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  fill: var(--color-text);
+}
+
+.centerIcon {
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--color-rust);
+  z-index: 2;
+  line-height: 1;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

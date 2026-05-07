@@ -1,0 +1,267 @@
+/* ============================================
+   DESIGN SYSTEM — Japanese Ink Portfolio
+   墨 (sumi) — Wabi-Sabi Aesthetic
+   ============================================ */
+
+/* --- Google Fonts Import: Japanese-inspired typography --- */
+@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@200;300;400;500;600;700;900&display=swap');
+
+/* --- CSS Custom Properties --- */
+:root {
+  /* ===== Japanese Ink Color Palette ===== */
+  /* Exact palette: #2C2C2C, #FAF8F5, #8B2500, #505050, #A8A8A8 */
+  --color-bg: #0E0E0E;
+  --color-text: #FAF8F5;
+  --color-text-secondary: #A8A8A8;
+  
+  /* 錆 Sabi (Rust) — Warm accent */
+  --color-rust: #8B2500;
+  --color-rust-soft: hsla(11, 100%, 27%, 0.4);
+  --color-rust-glow: hsla(11, 100%, 27%, 0.25);
+  --color-rust-deep: #6B1D00;
+  
+  /* 炭 Sumi shades — Charcoals */
+  --color-charcoal: #2C2C2C;
+  --color-charcoal-light: #505050;
+  --color-slate: #505050;
+  --color-ash: #A8A8A8;
+  
+  /* Ink wash tones */
+  --color-ink-wash: hsla(30, 5%, 90%, 0.05);
+  --color-ink-accent: hsla(11, 60%, 30%, 0.12);
+  
+  /* Legacy compatibility mappings */
+  --color-pink-soft: var(--color-rust-soft);
+  --color-pink-medium: var(--color-rust-glow);
+  --color-pink-accent: var(--color-ink-accent);
+  --color-peach: hsla(30, 20%, 22%, 0.25);
+  --color-gradient-start: var(--color-rust);
+  --color-gradient-end: var(--color-rust-deep);
+  --color-black: #000000;
+  --color-white: #FAF8F5;
+  --color-gray-100: #1A1A1A;
+  --color-gray-200: #2C2C2C;
+  --color-gray-400: #505050;
+
+  /* ===== Typography — Japanese-inspired ===== */
+  --font-display: 'Noto Serif JP', 'Shippori Mincho', 'Georgia', serif;
+  --font-body: 'Zen Kaku Gothic New', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-accent: 'Shippori Mincho', 'Noto Serif JP', serif;
+
+  /* Font Sizes */
+  --text-xs: 0.7rem;
+  --text-sm: 0.8rem;
+  --text-base: 0.95rem;
+  --text-md: 1.1rem;
+  --text-lg: 1.3rem;
+  --text-xl: 1.8rem;
+  --text-2xl: 2.5rem;
+  --text-3xl: 3.5rem;
+  --text-4xl: 5rem;
+  --text-5xl: 7rem;
+  --text-6xl: 9rem;
+  --text-hero: clamp(5rem, 10vw, 12rem);
+  --text-mega: clamp(4rem, 8vw, 9rem);
+
+  /* Spacing */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+  --space-2xl: 6rem;
+  --space-3xl: 8rem;
+
+  /* Layout */
+  --navbar-height: 60px;
+  --slide-padding: clamp(2rem, 4vw, 5rem);
+  --border-radius-sm: 2px;
+  --border-radius-md: 4px;
+  --border-radius-lg: 8px;
+
+  /* Animation — slower, more zen */
+  --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-brush: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 0.25s;
+  --duration-normal: 0.5s;
+  --duration-slow: 1s;
+  --duration-glacial: 1.5s;
+
+  /* Z-index layers */
+  --z-blob: 1;
+  --z-content: 10;
+  --z-image: 5;
+  --z-text: 15;
+  --z-navbar: 100;
+  --z-counter: 90;
+  --z-gradient-bar: 95;
+}
+
+/* --- Reset --- */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto; /* GSAP handles scrolling */
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+/* --- Typography Utility Classes --- */
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+.font-accent {
+  font-family: var(--font-accent);
+}
+
+.text-spaced {
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-size: var(--text-xs);
+  font-weight: 500;
+}
+
+/* --- Animation Keyframes --- */
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(4px, -6px) scale(1.008); }
+  50% { transform: translate(-2px, 5px) scale(0.995); }
+  75% { transform: translate(6px, 2px) scale(1.003); }
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(12px, -6px); }
+  66% { transform: translate(-8px, 10px); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+
+/* Ink brush stroke animation */
+@keyframes brushStroke {
+  0% { width: 0; opacity: 0; }
+  50% { opacity: 1; }
+  100% { width: 100%; opacity: 0.6; }
+}
+
+/* 筆 Fude (Brush) — vertical text reveal, top-to-bottom */
+@keyframes brushRevealV {
+  from {
+    clip-path: inset(0 0 100% 0);
+    opacity: 0;
+  }
+  to {
+    clip-path: inset(0 0 0% 0);
+    opacity: 1;
+  }
+}
+
+/* Horizontal brush reveal — left-to-right */
+@keyframes brushRevealH {
+  from {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0.3;
+  }
+  to {
+    clip-path: inset(0 0% 0 0);
+    opacity: 1;
+  }
+}
+
+/* Ink drip fade */
+@keyframes inkDrip {
+  0% { opacity: 0; transform: translateY(-8px); }
+  60% { opacity: 1; }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Selection styling --- */
+::selection {
+  background: var(--color-rust-soft);
+  color: var(--color-white);
+}
+
+/* --- Scrollbar styling --- */
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+/* Hide scrollbar for horizontal scroll */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}

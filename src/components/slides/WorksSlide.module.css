@@ -1,0 +1,73 @@
+.slide {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  min-width: 100vw;
+  overflow: visible;
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: calc(var(--navbar-height) + var(--space-lg)) var(--slide-padding) var(--space-3xl);
+}
+
+/* Big centered title */
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 9vw, 9rem);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: -0.01em;
+  text-align: center;
+  margin-bottom: var(--space-lg);
+  z-index: var(--z-text);
+  position: relative;
+}
+
+/* Photo overlapping the title - positioned center-left */
+.photo {
+  position: absolute;
+  left: 20%;
+  top: 30%;
+  width: 300px;
+  height: 400px;
+  object-fit: cover;
+  filter: grayscale(100%) contrast(1.1);
+  z-index: var(--z-image);
+}
+
+/* Text columns below the title */
+.textColumns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  max-width: 700px;
+  width: 100%;
+  margin-top: var(--space-md);
+  z-index: var(--z-text);
+  position: relative;
+}
+
+.textCol p {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+}
+
+.textCol p strong {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* Rotating badge - positioned far right, partially off-screen */
+.badgeContainer {
+  position: absolute;
+  top: 50%;
+  right: -30px;
+  transform: translateY(-50%);
+  z-index: var(--z-text);
+}

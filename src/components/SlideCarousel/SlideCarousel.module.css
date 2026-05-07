@@ -1,0 +1,17 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+  /* Only the wrapper clips horizontally — individual slides stay overflow:visible */
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  width: fit-content;
+  will-change: transform;
+}
+
+/* Individual slides within the track can bleed into each other */
+.track > * {
+  flex-shrink: 0;
+}

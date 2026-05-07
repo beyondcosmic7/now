@@ -1,0 +1,132 @@
+.counter {
+  position: fixed;
+  bottom: 30px;
+  right: var(--slide-padding);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  z-index: var(--z-counter);
+}
+
+.arrows {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.arrowBtn {
+  font-size: var(--text-base);
+  padding: 6px 10px;
+  border: 1px solid var(--color-charcoal-light);
+  border-radius: 50%;
+  transition: all var(--duration-normal) cubic-bezier(0.25, 0.1, 0.25, 1);
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text);
+  background: none;
+}
+
+.arrowBtn:hover {
+  background: var(--color-rust);
+  color: var(--color-white);
+  border-color: var(--color-rust);
+  transform: scale(1.1);
+}
+
+.arrowBtn:active {
+  transform: scale(0.95);
+}
+
+.slideNumber {
+  font-family: var(--font-accent);
+  font-size: 2.8rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  display: flex;
+  align-items: baseline;
+  overflow: hidden;
+  height: 3rem;
+  color: var(--color-text);
+}
+
+.asterisk {
+  font-size: 1.2rem;
+  margin-right: 2px;
+  font-weight: 700;
+  color: var(--color-rust);
+}
+
+.numWrapper {
+  display: inline-block;
+  position: relative;
+  height: 3rem;
+  overflow: hidden;
+}
+
+.numInner {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.numDigit {
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2ch;
+}
+
+/* Progress pill — ink theme */
+.progressPill {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--z-counter);
+  width: 50px;
+  height: 28px;
+  border: 1.5px solid var(--color-charcoal-light);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.progressPillFill {
+  height: 100%;
+  background: var(--color-rust);
+  border-radius: 14px;
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  opacity: 0.7;
+}
+
+.socials {
+  position: fixed;
+  bottom: 12px;
+  right: var(--slide-padding);
+  display: flex;
+  gap: var(--space-md);
+  z-index: var(--z-counter);
+}
+
+.socialLink {
+  font-family: var(--font-accent);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.4;
+  color: var(--color-text);
+  transition: opacity var(--duration-normal) ease, transform var(--duration-fast) ease, color var(--duration-fast) ease;
+}
+
+.socialLink:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+  color: var(--color-rust);
+}

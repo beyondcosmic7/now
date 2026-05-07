@@ -1,0 +1,143 @@
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #0A0A0A;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 1.2s cubic-bezier(0.76, 0, 0.24, 1);
+  overflow: hidden;
+}
+
+/* Exit animation — ink drains upward */
+.exiting {
+  clip-path: inset(0 0 100% 0);
+  opacity: 0;
+}
+
+/* Film grain texture overlay */
+.grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 128px;
+  pointer-events: none;
+}
+
+/* Japanese kanji — top right corner */
+.kanjiTop {
+  position: absolute;
+  top: 40px;
+  right: 50px;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  writing-mode: vertical-rl;
+  letter-spacing: 0.3em;
+  color: #8B2500;
+  opacity: 0.4;
+  animation: inkDripIn 1.5s cubic-bezier(0.25, 0.1, 0.25, 1) 0.3s both;
+}
+
+/* ===== SKYFALL SVG TEXT ===== */
+.wordContainer {
+  position: relative;
+  width: min(85vw, 900px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.skyfallSvg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* Hollow outline stroke */
+.outlineText {
+  font-family: 'Noto Serif JP', 'Georgia', serif;
+  font-size: 130px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  fill: none;
+  stroke: #2C2C2C;
+  stroke-width: 1;
+}
+
+/* Filled ink — revealed by clipPath */
+.filledText {
+  font-family: 'Noto Serif JP', 'Georgia', serif;
+  font-size: 130px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  fill: #FAF8F5;
+}
+
+/* Brush stroke underline */
+.brushLine {
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #8B2500 15%,
+    #8B2500 85%,
+    transparent 100%
+  );
+  margin-top: 16px;
+  transition: width 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+  opacity: 0.6;
+}
+
+/* ===== Progress counter ===== */
+.progressInfo {
+  position: absolute;
+  bottom: 60px;
+  right: 50px;
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.progressNum {
+  font-family: var(--font-accent);
+  font-size: 0.9rem;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  color: #505050;
+  font-variant-numeric: tabular-nums;
+}
+
+.progressLabel {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  color: #505050;
+}
+
+/* ===== Bottom tagline ===== */
+.tagline {
+  position: absolute;
+  bottom: 40px;
+  left: 50px;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #505050;
+  animation: inkDripIn 1s ease 0.6s both;
+}
+
+/* ===== Keyframes ===== */
+@keyframes inkDripIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 0.4;
+    transform: translateY(0);
+  }
+}
