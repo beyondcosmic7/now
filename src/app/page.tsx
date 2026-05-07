@@ -3,10 +3,14 @@
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import IntroLoader from '@/components/IntroLoader/IntroLoader';
+import RoseLoader from '@/components/RoseLoader/RoseLoader';
 
 const SlideCarousel = dynamic(
   () => import('@/components/SlideCarousel/SlideCarousel'),
-  { ssr: false }
+  {
+    ssr: false,
+    loading: () => <RoseLoader />,
+  }
 );
 
 export default function Home() {
@@ -15,7 +19,6 @@ export default function Home() {
   return (
     <main>
       {!isLoaded && <IntroLoader onComplete={() => setIsLoaded(true)} />}
-      {/* Render carousel behind the intro so it's ready when intro exits */}
       <div style={{ visibility: isLoaded ? 'visible' : 'hidden' }}>
         <SlideCarousel />
       </div>
