@@ -106,23 +106,50 @@
   color: var(--color-rust);
 }
 
+/* ===== Original 3-line Menu Button ===== */
 .menuBtn {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px;
+  flex-direction: column;
+  gap: 5px;
+  width: 26px;
   cursor: pointer;
+  padding: 4px 0;
   background: none;
   border: none;
-  color: var(--color-text);
-  transition: transform var(--duration-fast) ease, color var(--duration-fast) ease;
 }
 
-.menuBtn:hover {
-  transform: scale(1.1);
-  color: var(--color-rust);
+.menuLine {
+  width: 100%;
+  height: 1.5px;
+  background: var(--color-text);
+  transition: all 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+  transform-origin: center;
 }
 
-.menuSvg {
-  display: block;
+.menuLine:last-child {
+  width: 65%;
+  margin-left: auto;
+}
+
+.menuBtn:hover .menuLine:last-child {
+  width: 100%;
+}
+
+.menuBtn:hover .menuLine {
+  background: var(--color-rust);
+}
+
+/* Active state — transform to X */
+.menuBtnActive .menuLine:first-child {
+  transform: translateY(6.5px) rotate(45deg);
+}
+
+.menuBtnActive .menuLine:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.menuBtnActive .menuLine:last-child {
+  width: 100%;
+  transform: translateY(-6.5px) rotate(-45deg);
 }

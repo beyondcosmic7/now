@@ -1,0 +1,168 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.open {
+  pointer-events: auto;
+  visibility: visible;
+}
+
+/* SVG path wipe background */
+.svgOverlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.overlayPath {
+  fill: #0E0E0E;
+  transition: d 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* Menu content */
+.content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: calc(var(--navbar-height) + var(--space-2xl)) var(--slide-padding) var(--space-2xl);
+  gap: var(--space-3xl);
+}
+
+/* Navigation links */
+.nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-lg);
+}
+
+.navItem {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: var(--color-text);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s cubic-bezier(0.25, 0.1, 0.25, 1),
+              transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.open .navItem {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.navItemSub {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-rust);
+  margin-bottom: 4px;
+}
+
+.navItemText {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navItem:hover .navItemText {
+  color: var(--color-rust);
+  transform: translateX(12px);
+}
+
+/* Right info panel */
+.info {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--space-lg);
+  position: relative;
+}
+
+.infoBlock {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.open .infoBlock {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.infoLabel {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-ash);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.infoText {
+  font-family: var(--font-accent);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.socials {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.socialLink {
+  font-family: var(--font-accent);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text);
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+}
+
+.socialLink:hover {
+  color: var(--color-rust);
+  transform: translateX(6px);
+}
+
+/* Japanese accent — large kanji */
+.kanjiAccent {
+  position: absolute;
+  top: 20%;
+  right: 0;
+  font-family: var(--font-display);
+  font-size: 5rem;
+  color: var(--color-charcoal);
+  writing-mode: vertical-rl;
+  letter-spacing: 0.15em;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  pointer-events: none;
+}
+
+.open .kanjiAccent {
+  opacity: 0.3;
+  transform: translateY(0);
+}

@@ -39,14 +39,16 @@ export default function SlideCarousel() {
         const slides = track.querySelectorAll('[data-slide]');
         const totalWidth = track.scrollWidth - window.innerWidth;
 
-        // ===== MAIN HORIZONTAL SCROLL — buttery smooth =====
+        // Force a layout recalculation to ensure pinning works
+        ScrollTrigger.refresh();
+
         const mainTween = gsap.to(track, {
           x: -totalWidth,
           ease: 'none',
           scrollTrigger: {
             trigger: wrapper,
             pin: true,
-            scrub: 1.5, // Higher value = smoother, more lag (more "calm")
+            scrub: 1.5,
             end: () => `+=${totalWidth}`,
             invalidateOnRefresh: true,
             onUpdate: (self) => {
