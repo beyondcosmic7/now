@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
 import styles from './AnimatedMap.module.css';
 
@@ -34,75 +34,62 @@ const LAYER_SEQUENCE = [
 ];
 
 export default function AnimatedMap() {
-  const objectRef = useRef<HTMLObjectElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [loaded, setLoaded] = useState(false);
-  const animatedRef = useRef(false);
-
-  const animateLayers = useCallback(() => {
-    if (animatedRef.current) return;
-    const obj = objectRef.current;
-    if (!obj) return;
-
-    const svgDoc = obj.contentDocument;
-    if (!svgDoc) return;
-
-    const svgEl = svgDoc.querySelector('svg');
-    if (!svgEl) return;
-
-    animatedRef.current = true;
-
-    // Apply dark ink theme
-    svgEl.style.filter = 'invert(1) contrast(0.7) brightness(0.3) sepia(0.15) hue-rotate(5deg)';
-    svgEl.style.width = '100%';
-    svgEl.style.height = '100%';
-
-    // Hide all layers first
-    LAYER_SEQUENCE.forEach(({ id }) => {
-      const layer = svgDoc.getElementById(id);
-      if (layer) {
-        gsap.set(layer, { opacity: 0 });
-      }
-    });
-
-    setLoaded(true);
-
-    // Animate each layer in sequence
-    LAYER_SEQUENCE.forEach(({ id, delay }) => {
-      const layer = svgDoc.getElementById(id);
-      if (layer) {
-        gsap.to(layer, {
-          opacity: 0.9,
-          duration: 0.8,
-          delay,
-          ease: 'power2.out',
-        });
-      }
-    });
-  }, []);
 
   useEffect(() => {
-    const obj = objectRef.current;
-    if (!obj) return;
+    const container = containerRef.current;
+    if (!container) return;
 
-    obj.addEventListener('load', animateLayers);
+    // Fetch the SVG as raw text and inject it into the DOM
+    fetch('/kota_japanese_ink_20260507_110004.svg')
+      .then((res) => res.text())
+      .then((svgText) => {
+        // Inject raw SVG into container
+        container.innerHTML = svgText;
 
-    // If already loaded (cached)
-    if (obj.contentDocument?.querySelector('svg')) {
-      animateLayers();
-    }
+        const svgEl = container.querySelector('svg');
+        if (!svgEl) return;
 
-    return () => obj.removeEventListener('load', animateLayers);
-  }, [animateLayers]);
+        // Style the SVG
+        svgEl.style.width = '100%';
+        svgEl.style.height = '100%';
+        svgEl.style.position = 'absolute';
+        svgEl.style.inset = '0';
+        svgEl.style.filter = 'invert(1) contrast(0.7) brightness(0.3) sepia(0.15) hue-rotate(5deg)';
+
+        // Hide all layers first
+        LAYER_SEQUENCE.forEach(({ id }) => {
+          const layer = container.querySelector(`#${id}`);
+          if (layer) {
+            gsap.set(layer, { opacity: 0 });
+          }
+        });
+
+        setLoaded(true);
+
+        // Animate each layer in with staggered delays
+        LAYER_SEQUENCE.forEach(({ id, delay }) => {
+          const layer = container.querySelector(`#${id}`);
+          if (layer) {
+            gsap.to(layer, {
+              opacity: 0.9,
+              duration: 0.8,
+              delay: delay + 0.3, // small extra delay to let the DOM settle
+              ease: 'power2.out',
+            });
+          }
+        });
+      })
+      .catch((err) => {
+        console.error('Failed to load SVG map:', err);
+      });
+  }, []);
 
   return (
-    <div className={styles.mapContainer}>
-      <object
-        ref={objectRef}
-        data="/kota_japanese_ink_20260507_110004.svg"
-        type="image/svg+xml"
-        className={`${styles.svgObject} ${loaded ? styles.svgLoaded : ''}`}
-        aria-label="Kota city map — animated ink drawing"
-      />
-    </div>
+    <div
+      ref={containerRef}
+      className={`${styles.mapContainer} ${loaded ? styles.loaded : ''}`}
+    />
   );
 }
