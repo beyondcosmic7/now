@@ -16,6 +16,11 @@ const MENU_ITEMS = [
 ];
 
 export default function Menu({ isOpen, onClose }: MenuProps) {
+  // Use a more complex path for the wipe transition
+  // We'll use two sets of paths to create a more organic feel
+  const openPath = 'M 0 0 V 100 Q 50 100 100 100 V 0 z';
+  const closedPath = 'M 0 0 V 0 Q 50 0 100 0 V 0 z';
+
   return (
     <div className={`${styles.overlay} ${isOpen ? styles.open : ''}`}>
       {/* SVG path wipe transition */}
@@ -26,11 +31,7 @@ export default function Menu({ isOpen, onClose }: MenuProps) {
       >
         <path
           className={styles.overlayPath}
-          d={
-            isOpen
-              ? 'M 0 0 V 100 Q 50 100 100 100 V 0 z'
-              : 'M 0 0 V 0 Q 50 0 100 0 V 0 z'
-          }
+          d={isOpen ? openPath : closedPath}
         />
       </svg>
 

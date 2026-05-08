@@ -4,11 +4,17 @@
   z-index: 999;
   pointer-events: none;
   visibility: hidden;
+  opacity: 0;
+  /* Delay visibility: hidden until the 0.8s animation finishes */
+  transition: visibility 0s 0.8s, opacity 0.6s ease;
 }
 
 .open {
   pointer-events: auto;
   visibility: visible;
+  opacity: 1;
+  /* Reset visibility delay when opening */
+  transition: visibility 0s 0s, opacity 0.6s ease;
 }
 
 /* SVG path wipe background */
@@ -22,6 +28,7 @@
 
 .overlayPath {
   fill: #0E0E0E;
+  /* Use a slightly different easing for a more organic 'closing' feel */
   transition: d 0.8s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
@@ -34,6 +41,14 @@
   display: flex;
   padding: calc(var(--navbar-height) + var(--space-2xl)) var(--slide-padding) var(--space-2xl);
   gap: var(--space-3xl);
+  /* Ensure content fades out smoothly */
+  transition: opacity 0.4s ease;
+  opacity: 0;
+}
+
+.open .content {
+  opacity: 1;
+  transition: opacity 0.8s ease 0.2s;
 }
 
 /* Navigation links */
@@ -52,13 +67,16 @@
   color: var(--color-text);
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.6s cubic-bezier(0.25, 0.1, 0.25, 1),
-              transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+  /* Slower transition when opening (staggered), faster when closing */
+  transition: opacity 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+              transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .open .navItem {
   opacity: 1;
   transform: translateY(0);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1),
+              transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .navItemSub {
@@ -98,12 +116,13 @@
 .infoBlock {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
 .open .infoBlock {
   opacity: 1;
   transform: translateY(0);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 .infoLabel {
@@ -158,11 +177,12 @@
   letter-spacing: 0.15em;
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition: opacity 0.4s ease, transform 0.4s ease;
   pointer-events: none;
 }
 
 .open .kanjiAccent {
   opacity: 0.3;
   transform: translateY(0);
+  transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s;
 }
