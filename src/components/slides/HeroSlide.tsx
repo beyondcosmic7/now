@@ -7,60 +7,53 @@ import FloatingBlob from '../FloatingBlob/FloatingBlob';
 export default function HeroSlide() {
   return (
     <section className={styles.slide} id="hero-slide" data-slide="1">
-      <FloatingBlob size="large" variant="pink" top="20%" left="60%" delay={1} />
-      <FloatingBlob size="small" variant="peach" bottom="30%" left="15%" delay={4} />
+      <FloatingBlob size="medium" variant="pink" top="35%" left="20%" delay={2} />
+      <FloatingBlob size="small" variant="peach" bottom="25%" right="25%" delay={5} />
 
-      {/* Grid overlay — subtle design DNA */}
-      <div className={styles.gridOverlay}>
-        <div className={styles.gridLine} />
-        <div className={styles.gridLine} />
-        <div className={styles.gridLine} />
+      {/* Left: Atmospheric — quiet, breathing space */}
+      <div className={styles.atmosphereHalf}>
+        {/* Single thin vertical line */}
+        <div className={styles.vertLine} />
+
+        {/* Quiet kanji — large but ghostly */}
+        <span className={styles.kanjiGhost} data-speed="slow">墨</span>
+
+        {/* Small index number */}
+        <span className={styles.indexNum} data-stagger>01</span>
       </div>
 
-      {/* Top bar: Role + Year */}
-      <div className={styles.topBar}>
-        <span className={styles.roleTag} data-stagger>Web Developer &amp; Design Engineer</span>
-        <span className={styles.yearTag} data-stagger>© 2024</span>
+      {/* Right: The introduction — calm, confident */}
+      <div className={styles.introHalf}>
+        {/* Role — tiny, understated */}
+        <div className={styles.roleRow} data-stagger>
+          <span className={styles.roleLine} />
+          <span className={styles.roleText}>Developer & Design Engineer</span>
+        </div>
+
+        {/* The name — refined, not loud */}
+        <div className={styles.nameBlock}>
+          <h1 className={styles.firstName} data-title-reveal>Akshan</h1>
+          <p className={styles.lastName} data-stagger>Khan</p>
+        </div>
+
+        {/* Brief descriptor */}
+        <p className={styles.descriptor} data-text-fade>
+          Crafting interfaces that feel<br />
+          alive — where every detail matters.
+        </p>
+
+        {/* Minimal CTA */}
+        <a className={styles.cta} data-stagger href="#works">
+          <span className={styles.ctaText}>Selected Works</span>
+          <span className={styles.ctaArrow} data-cta-arrow>→</span>
+        </a>
       </div>
 
-      {/* ===== THE NAME — Full-bleed typographic centerpiece ===== */}
-      <div className={styles.nameComposition} data-speed="fast">
-        {/* First name — massive, filled, dominant */}
-        <h1 className={styles.firstName} data-title-reveal>AKSHAN</h1>
-
-        {/* Divider line with role */}
-        <div className={styles.nameDivider} data-stagger>
-          <span className={styles.dividerLine} />
-          <span className={styles.dividerText}>開発者 — Developer</span>
-          <span className={styles.dividerLine} />
-        </div>
-
-        {/* Last name — outlined, elegant contrast */}
-        <span className={styles.lastName} data-title-reveal>KHAN</span>
+      {/* Bottom edge — location & year, very quiet */}
+      <div className={styles.bottomEdge}>
+        <span className={styles.edgeText} data-stagger>Kota, India</span>
+        <span className={styles.edgeText} data-stagger>Portfolio 2024</span>
       </div>
-
-      {/* Bottom info row */}
-      <div className={styles.bottomRow}>
-        <div className={styles.locationBlock} data-stagger>
-          <span className={styles.locationDot} />
-          <span className={styles.locationText}>Kota, India</span>
-        </div>
-
-        <div className={styles.skillPills} data-stagger>
-          <span className={styles.pill}>React</span>
-          <span className={styles.pill}>Next.js</span>
-          <span className={styles.pill}>GSAP</span>
-          <span className={styles.pill}>UI/UX</span>
-        </div>
-
-        <div className={styles.scrollHint} data-stagger>
-          <span className={styles.scrollText}>Scroll</span>
-          <span className={styles.scrollArrow}>→</span>
-        </div>
-      </div>
-
-      {/* Vertical kanji accent — right edge */}
-      <span className={styles.kanjiAccent} data-stagger>墨</span>
     </section>
   );
 }
