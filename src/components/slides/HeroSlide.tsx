@@ -45,8 +45,8 @@ export default function HeroSlide() {
         <span className={styles.kanjiAccent} data-stagger>開発者</span>
 
         <div className={styles.titleBlock} data-speed="fast">
-          <p className={styles.subtitle} data-stagger>A K S H A N</p>
-          <h1 className={styles.title} data-title-reveal>KHAN</h1>
+          <p className={styles.subtitle} data-stagger>K H A N</p>
+          <h1 className={styles.title} data-title-reveal>AKSHAN</h1>
         </div>
 
         {/* Skills row */}

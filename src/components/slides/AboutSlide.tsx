@@ -9,7 +9,7 @@ export default function AboutSlide() {
     <section className={styles.slide} id="about-slide" data-slide="2">
       {/* Background elements */}
       <h2 className={styles.editorialBg} data-speed="fast">
-        AKS<br />HAN
+        AKSHAN
       </h2>
 
       {/* Left: MASSIVE Kota city map */}
