@@ -22,7 +22,7 @@ const LAYER_SEQUENCE = [
   { id: 'map-layer-road-minor-high', start: 0.6, end: 0.85 },
   { id: 'map-layer-road-major', start: 0.7, end: 0.95 },
   { id: 'map-layer-building', start: 0.8, end: 0.98 },
-  { id: 'overlay-layer-text', start: 0.9, end: 1.0 },
+  { id: 'overlay-layer-text', start: 0.9, end: 0.95 },
 ];
 
 export default function AnimatedMap() {
@@ -73,9 +73,9 @@ export default function AnimatedMap() {
             scrollTrigger: {
               trigger: container,
               containerAnimation: mainAnimation,
-              start: 'left 100%', // Starts when slide 2 enters
-              end: 'left 0%',    // Completes when slide 2 is fully centered
-              scrub: 1,           // Smooth scrubbing
+              start: 'left 100%', // Starts as slide enters
+              end: 'left 15%',    // Completes slightly before centering to ensure it finishes
+              scrub: true,        // Direct scrubbing for precision
             }
           });
 
