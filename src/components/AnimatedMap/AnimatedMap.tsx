@@ -73,9 +73,9 @@ export default function AnimatedMap() {
             scrollTrigger: {
               trigger: container,
               containerAnimation: mainAnimation,
-              start: 'left 100%', // Starts as slide enters
-              end: 'left 15%',    // Completes slightly before centering to ensure it finishes
-              scrub: true,        // Direct scrubbing for precision
+              start: 'left 130%',  // Starts well before slide is visible
+              end: 'left 50%',     // Completes by the time slide is centered
+              scrub: true,
             }
           });
 
