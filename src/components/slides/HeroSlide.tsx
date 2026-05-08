@@ -7,15 +7,23 @@ import FloatingBlob from '../FloatingBlob/FloatingBlob';
 export default function HeroSlide() {
   return (
     <section className={styles.slide} id="hero-slide" data-slide="1">
-      {/* Left: Full-bleed portrait */}
-      <div className={styles.imageHalf}>
-        <img
-          src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800&h=1200&fit=crop&crop=face"
-          alt="Akshan Khan portrait"
-          className={styles.heroImage}
-          data-speed="slow"
-          data-image-reveal
-        />
+      {/* Left: Typography showcase instead of photo */}
+      <div className={styles.designHalf}>
+        {/* Animated grid lines */}
+        <div className={styles.gridLines}>
+          <div className={styles.gridH} />
+          <div className={styles.gridH} />
+          <div className={styles.gridH} />
+          <div className={styles.gridV} />
+          <div className={styles.gridV} />
+        </div>
+
+        {/* Large decorative kanji watermark */}
+        <span className={styles.kanjiWatermark} data-speed="slow">墨</span>
+
+        {/* Animated circle element */}
+        <div className={styles.designCircle} />
+
         <div className={styles.progressBar}>
           <div className={styles.progressIcon}>墨</div>
           <div className={styles.progressLine}>
@@ -33,12 +41,21 @@ export default function HeroSlide() {
         <FloatingBlob size="medium" variant="pink" top="40%" right="20%" delay={2} />
         <FloatingBlob size="small" variant="peach" bottom="25%" right="10%" delay={5} />
 
-        {/* Japanese vertical accent */}
-        <span className={styles.kanjiAccent} data-stagger>写真家</span>
+        {/* Vertical accent */}
+        <span className={styles.kanjiAccent} data-stagger>開発者</span>
 
         <div className={styles.titleBlock} data-speed="fast">
           <p className={styles.subtitle} data-stagger>A K S H A N</p>
           <h1 className={styles.title} data-title-reveal>KHAN</h1>
+        </div>
+
+        {/* Skills row */}
+        <div className={styles.skillsRow} data-stagger>
+          <span className={styles.skillTag}>Web Development</span>
+          <span className={styles.skillDot}>·</span>
+          <span className={styles.skillTag}>UI/UX Design</span>
+          <span className={styles.skillDot}>·</span>
+          <span className={styles.skillTag}>Motion</span>
         </div>
 
         <div className={styles.cta} data-stagger>

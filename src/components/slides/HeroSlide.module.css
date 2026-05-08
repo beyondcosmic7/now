@@ -9,18 +9,93 @@
   background: var(--color-bg);
 }
 
-.imageHalf {
+/* Left: Design showcase instead of photo */
+.designHalf {
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-charcoal);
 }
 
-.heroImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: grayscale(100%) contrast(1.1) brightness(0.9);
+/* Animated grid overlay */
+.gridLines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.gridH {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--color-charcoal-light) 20%, var(--color-charcoal-light) 80%, transparent 100%);
+  opacity: 0.3;
+}
+
+.gridH:nth-child(1) { top: 25%; }
+.gridH:nth-child(2) { top: 50%; }
+.gridH:nth-child(3) { top: 75%; }
+
+.gridV {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent 0%, var(--color-charcoal-light) 20%, var(--color-charcoal-light) 80%, transparent 100%);
+  opacity: 0.3;
+}
+
+.gridV:nth-child(4) { left: 33%; }
+.gridV:nth-child(5) { left: 66%; }
+
+/* Large decorative kanji — centered, massive */
+.kanjiWatermark {
+  font-family: var(--font-display);
+  font-size: clamp(14rem, 28vw, 22rem);
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--color-charcoal-light);
+  line-height: 1;
+  opacity: 0.4;
+  user-select: none;
+  animation: kanjiFloat 12s ease-in-out infinite;
+}
+
+@keyframes kanjiFloat {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.02) rotate(1deg); }
+}
+
+/* Geometric circle element */
+.designCircle {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border: 1px solid var(--color-rust);
+  border-radius: 50%;
+  top: 18%;
+  right: 12%;
+  opacity: 0.3;
+  animation: circleRotate 20s linear infinite;
+}
+
+.designCircle::after {
+  content: '';
+  position: absolute;
+  inset: 15px;
+  border: 1px solid var(--color-rust);
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+@keyframes circleRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .progressBar {
@@ -58,7 +133,7 @@
   left: 0;
   height: 100%;
   width: 40%;
-  background: rgba(255,255,255,0.9);
+  background: var(--color-rust);
 }
 
 .contentHalf {
@@ -90,11 +165,6 @@
   line-height: 1.4;
 }
 
-.titleBlock {
-  margin-bottom: var(--space-lg);
-}
-
-/* Japanese vertical kanji accent */
 .kanjiAccent {
   position: absolute;
   top: 50%;
@@ -107,6 +177,10 @@
   color: var(--color-rust);
   opacity: 0.5;
   pointer-events: none;
+}
+
+.titleBlock {
+  margin-bottom: var(--space-lg);
 }
 
 .subtitle {
@@ -127,6 +201,35 @@
   color: var(--color-text);
 }
 
+/* Skills row */
+.skillsRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: var(--space-lg);
+}
+
+.skillTag {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-ash);
+  padding: 4px 10px;
+  border: 1px solid var(--color-charcoal-light);
+  transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.skillTag:hover {
+  border-color: var(--color-rust);
+  color: var(--color-rust);
+}
+
+.skillDot {
+  color: var(--color-charcoal-light);
+  font-size: 0.9rem;
+}
+
 .cta {
   display: inline-flex;
   align-items: center;
@@ -136,7 +239,6 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-top: var(--space-lg);
   cursor: pointer;
   transition: gap var(--duration-normal) var(--ease-out-expo);
 }

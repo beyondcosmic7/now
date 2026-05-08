@@ -44,7 +44,8 @@
   font-size: var(--text-sm);
   letter-spacing: 0.4em;
   text-transform: uppercase;
-  color: var(--color-pink-medium);
+  color: var(--color-rust);
+  opacity: 0.6;
   z-index: var(--z-text);
 }
 
@@ -61,16 +62,56 @@
   white-space: nowrap;
 }
 
-.centerImage {
+/* ===== Code showcase block ===== */
+.codeShowcase {
   position: absolute;
-  width: 45%;
-  max-width: 500px;
-  height: 70%;
-  object-fit: cover;
-  filter: grayscale(100%) contrast(1.15);
-  z-index: var(--z-image);
+  width: 380px;
   right: 15%;
-  top: 15%;
+  top: 18%;
+  height: auto;
+  z-index: var(--z-image);
+  background: #151515;
+  border: 1px solid var(--color-charcoal-light);
+  overflow: hidden;
+}
+
+.codeHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: #1a1a1a;
+  border-bottom: 1px solid var(--color-charcoal);
+}
+
+.codeDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.codeFilename {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.6rem;
+  color: var(--color-ash);
+  margin-left: auto;
+  letter-spacing: 0.05em;
+}
+
+.codeBlock {
+  padding: 18px 16px;
+  margin: 0;
+  font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 0.72rem;
+  line-height: 1.8;
+  color: var(--color-ash);
+  overflow: hidden;
+  white-space: pre;
+  tab-size: 2;
+}
+
+.codeBlock code {
+  color: var(--color-text-secondary);
 }
 
 .textBlock {

@@ -10,37 +10,39 @@ export default function WorksSlide() {
     <section className={styles.slide} id="works-slide" data-slide="4">
       <FloatingBlob size="large" variant="pink" top="15%" left="25%" delay={1} />
 
-      {/* Photo overlapping the title */}
-      <img
-        src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600&h=800&fit=crop"
-        alt="Photography work"
-        className={styles.photo}
-        data-speed="slow"
-        data-image-reveal
-      />
+      {/* Geometric design element instead of photo */}
+      <div className={styles.designElement} data-speed="slow" data-image-reveal>
+        <div className={styles.geoOuter} />
+        <div className={styles.geoInner} />
+        <div className={styles.geoCross}>
+          <div className={styles.geoCrossH} />
+          <div className={styles.geoCrossV} />
+        </div>
+        <span className={styles.geoLabel}>AK.24</span>
+      </div>
 
       {/* Big centered title */}
       <h2 className={styles.title} data-speed="fast" data-title-reveal>
-        FRAME<br />
+        PIXEL<br />
         BY<br />
-        FRAME
+        PIXEL
       </h2>
 
       {/* Text columns below */}
       <div className={styles.textColumns}>
         <div className={styles.textCol} data-text-fade>
           <p>
-            Each frame is a deliberate composition. From
-            web interfaces to film sequences, the rhythm
-            of visual storytelling drives every decision
-            in the creative process.
+            Every interface is a deliberate composition. From
+            layout grids to motion curves, the rhythm
+            of visual hierarchy drives every decision
+            in the design process.
           </p>
         </div>
         <div className={styles.textCol} data-text-fade>
           <p>
             Blending technical precision with artistic intuition.
-            Code that performs, photographs that speak,
-            films that move — a unified creative vision,{' '}
+            Code that performs, designs that resonate,
+            animations that breathe — a unified creative vision,{' '}
             <strong>view portfolio</strong>.
           </p>
         </div>
@@ -49,7 +51,7 @@ export default function WorksSlide() {
       {/* Rotating badge on far right */}
       <div className={styles.badgeContainer} data-stagger>
         <RotatingBadge
-          text="★ WEB DEV ★ PHOTOGRAPHY ★ CINEMA "
+          text="★ WEB DEV ★ UI/UX ★ MOTION "
           centerSymbol="AK"
           size={160}
         />

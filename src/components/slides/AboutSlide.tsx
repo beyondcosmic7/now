@@ -8,54 +8,72 @@ export default function AboutSlide() {
   return (
     <section className={styles.slide} id="about-slide" data-slide="2">
       {/* Background elements */}
-      <div className={styles.rustBlock} data-speed="blob" />
       <h2 className={styles.editorialBg} data-speed="fast">
         AKS<br />HAN
       </h2>
 
-      {/* Left: Portrait photo */}
-      <div className={styles.leftContent}>
+      {/* Left: MASSIVE Kota city map */}
+      <div className={styles.mapHalf} data-image-reveal>
         <img
-          src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop&crop=face"
-          alt="Akshan working"
-          className={styles.centerPhoto}
-          data-speed="slow"
-          data-image-reveal
+          src="/kota_japanese_ink_20260507_105921.png"
+          alt="Kota city map"
+          className={styles.mapImage}
         />
+        {/* Map text overlays */}
+        <div className={styles.mapOverlay}>
+          <span className={styles.mapLabel} data-stagger>Currently based in</span>
+          <h4 className={styles.mapCity} data-stagger>KOTA</h4>
+          <span className={styles.mapCoords} data-stagger>25.2138° N, 75.8648° E</span>
+        </div>
+        {/* Kanji accent top-right */}
+        <span className={styles.mapKanji} data-stagger>古田</span>
+        {/* Pulsing location pin */}
+        <div className={styles.mapPin} />
+        {/* Corner coordinates */}
+        <span className={styles.mapCornerLabel}>Rajasthan, India</span>
       </div>
 
-      {/* Right: About content + Map */}
+      {/* Right: About content */}
       <div className={styles.rightContent}>
         <div className={styles.sectionLabel} data-stagger>
           <span className={styles.labelLine} />
-          <span>About Me</span>
+          <span>About</span>
         </div>
 
-        <h3 className={styles.heading} data-stagger>Developer &amp; Visual Artist</h3>
+        <h3 className={styles.heading} data-stagger>
+          Developer &amp;<br />Design Engineer
+        </h3>
 
         <p className={styles.bodyText} data-text-fade>
-          Crafting digital experiences at the intersection of code
-          and visual storytelling. From responsive web applications
-          to cinematic frames — every project is an exercise
-          in precision and creative vision.
+          I build interfaces that feel alive. Obsessed with 
+          the details — from micro-interactions to fluid 
+          page transitions. Every pixel is intentional,
+          every animation has purpose.
         </p>
 
-        {/* City Map with overlaid text */}
-        <div className={styles.mapContainer} data-image-reveal>
-          <img
-            src="/kota_japanese_ink_20260507_105921.png"
-            alt="Kota city map"
-            className={styles.mapImage}
-          />
-          {/* Animated text overlays */}
-          <div className={styles.mapOverlay}>
-            <span className={styles.mapLabel} data-stagger>Currently based in</span>
-            <h4 className={styles.mapCity} data-stagger>KOTA</h4>
-            <span className={styles.mapKanji} data-stagger>古田</span>
-            <span className={styles.mapCoords} data-stagger>25.2138° N, 75.8648° E</span>
+        {/* Tech stack showcase */}
+        <div className={styles.techGrid} data-stagger>
+          <span className={styles.techItem}>React</span>
+          <span className={styles.techItem}>Next.js</span>
+          <span className={styles.techItem}>GSAP</span>
+          <span className={styles.techItem}>Three.js</span>
+          <span className={styles.techItem}>TypeScript</span>
+          <span className={styles.techItem}>Figma</span>
+        </div>
+
+        <div className={styles.statRow} data-stagger>
+          <div className={styles.stat}>
+            <span className={styles.statNum}>03+</span>
+            <span className={styles.statLabel}>Years</span>
           </div>
-          {/* Location pin dot */}
-          <div className={styles.mapPin} />
+          <div className={styles.stat}>
+            <span className={styles.statNum}>20+</span>
+            <span className={styles.statLabel}>Projects</span>
+          </div>
+          <div className={styles.stat}>
+            <span className={styles.statNum}>∞</span>
+            <span className={styles.statLabel}>Curiosity</span>
+          </div>
         </div>
       </div>
 

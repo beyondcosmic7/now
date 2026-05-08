@@ -6,17 +6,6 @@
   display: flex;
   overflow: visible;
   background: var(--color-bg);
-  padding: calc(var(--navbar-height) + var(--space-lg)) 0 var(--space-3xl);
-}
-
-.leftContent {
-  position: relative;
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 0 var(--slide-padding);
-  z-index: 2;
 }
 
 /* Massive name background text */
@@ -35,33 +24,137 @@
   z-index: 1;
   white-space: nowrap;
   pointer-events: none;
-  opacity: 0.08;
+  opacity: 0.04;
 }
 
-/* Rust accent block */
-.rustBlock {
-  position: absolute;
-  width: 50%;
-  height: 55%;
-  background: var(--color-rust-soft);
-  top: 10%;
-  left: 0;
-  z-index: 0;
-}
-
-.centerPhoto {
+/* ============================================
+   LEFT HALF — Full-bleed Kota city map
+   ============================================ */
+.mapHalf {
   position: relative;
-  width: 55%;
-  max-width: 380px;
-  aspect-ratio: 3/4;
-  object-fit: cover;
-  filter: grayscale(60%) contrast(1.05) brightness(0.85);
-  z-index: 3;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: auto;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
 }
 
+.mapImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: invert(1) contrast(0.7) brightness(0.3) sepia(0.15) hue-rotate(5deg);
+  opacity: 0.9;
+}
+
+/* Gradient overlay for text legibility */
+.mapOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 30px 35px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    hsla(0, 0%, 4%, 0.5) 40%,
+    hsla(0, 0%, 4%, 0.85) 100%
+  );
+  pointer-events: none;
+  z-index: 3;
+}
+
+.mapLabel {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-ash);
+  margin-bottom: 6px;
+  display: block;
+}
+
+.mapCity {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--color-white);
+  line-height: 1;
+  margin: 0;
+}
+
+.mapCoords {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  color: var(--color-ash);
+  margin-top: 8px;
+  display: block;
+}
+
+/* Japanese kanji — positioned top-right, vertical */
+.mapKanji {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  writing-mode: vertical-rl;
+  letter-spacing: 0.25em;
+  color: var(--color-rust);
+  opacity: 0.6;
+  z-index: 4;
+}
+
+/* Pulsing location pin */
+.mapPin {
+  position: absolute;
+  top: 42%;
+  left: 48%;
+  width: 10px;
+  height: 10px;
+  background: var(--color-rust);
+  border-radius: 50%;
+  z-index: 5;
+  box-shadow: 0 0 0 0 hsla(11, 100%, 27%, 0.5);
+  animation: pinPulse 2.5s ease-in-out infinite;
+}
+
+.mapPin::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--color-rust);
+  border-radius: 50%;
+  opacity: 0.3;
+}
+
+@keyframes pinPulse {
+  0% { box-shadow: 0 0 0 0 hsla(11, 100%, 27%, 0.5); }
+  70% { box-shadow: 0 0 0 18px hsla(11, 100%, 27%, 0); }
+  100% { box-shadow: 0 0 0 0 hsla(11, 100%, 27%, 0); }
+}
+
+/* Corner label */
+.mapCornerLabel {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  font-family: var(--font-body);
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-ash);
+  opacity: 0.6;
+  z-index: 4;
+}
+
+/* ============================================
+   RIGHT HALF — About content
+   ============================================ */
 .rightContent {
   position: relative;
   width: 50%;
@@ -91,9 +184,9 @@
 }
 
 .heading {
-  font-family: var(--font-accent);
-  font-size: var(--text-xl);
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  font-weight: 700;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   margin-bottom: var(--space-md);
@@ -106,111 +199,60 @@
   line-height: 1.7;
   color: var(--color-text-secondary);
   max-width: 380px;
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-lg);
 }
 
-/* ============================================
-   CITY MAP — Kota with animated overlays
-   ============================================ */
-.mapContainer {
-  position: relative;
-  width: 100%;
-  max-width: 340px;
-  aspect-ratio: 4/3;
-  overflow: hidden;
-  border: 1px solid var(--color-charcoal-light);
-  margin-top: var(--space-sm);
-}
-
-.mapImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  /* Invert the light map to dark to match our palette */
-  filter: invert(1) contrast(0.7) brightness(0.35) sepia(0.15) hue-rotate(5deg);
-  opacity: 0.85;
-}
-
-/* Text overlay layer */
-.mapOverlay {
-  position: absolute;
-  inset: 0;
+/* Tech stack grid */
+.techGrid {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 16px 20px;
-  background: linear-gradient(
-    180deg,
-    transparent 30%,
-    hsla(0, 0%, 4%, 0.6) 70%,
-    hsla(0, 0%, 4%, 0.85) 100%
-  );
-  pointer-events: none;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: var(--space-lg);
+  max-width: 360px;
 }
 
-.mapLabel {
+.techItem {
   font-family: var(--font-body);
-  font-size: 0.6rem;
-  font-weight: 500;
-  letter-spacing: 0.25em;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-ash);
-  margin-bottom: 4px;
+  padding: 5px 12px;
+  border: 1px solid var(--color-charcoal-light);
+  transition: all 0.3s ease;
+  cursor: default;
 }
 
-.mapCity {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  color: var(--color-white);
-  line-height: 1;
-  margin: 0;
-}
-
-/* Japanese kanji — positioned top-right, vertical */
-.mapKanji {
-  position: absolute;
-  top: 14px;
-  right: 16px;
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  writing-mode: vertical-rl;
-  letter-spacing: 0.2em;
+.techItem:hover {
+  border-color: var(--color-rust);
   color: var(--color-rust);
-  opacity: 0.7;
+  transform: translateY(-2px);
 }
 
-.mapCoords {
+/* Stats row */
+.statRow {
+  display: flex;
+  gap: var(--space-xl);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.statNum {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1;
+}
+
+.statLabel {
   font-family: var(--font-body);
-  font-size: 0.55rem;
-  letter-spacing: 0.1em;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   color: var(--color-ash);
-  margin-top: 4px;
-}
-
-/* Pulsing location pin */
-.mapPin {
-  position: absolute;
-  top: 42%;
-  left: 48%;
-  width: 8px;
-  height: 8px;
-  background: var(--color-rust);
-  border-radius: 50%;
-  z-index: 5;
-  box-shadow: 0 0 0 0 hsla(11, 100%, 27%, 0.5);
-  animation: pinPulse 2.5s ease-in-out infinite;
-}
-
-@keyframes pinPulse {
-  0% {
-    box-shadow: 0 0 0 0 hsla(11, 100%, 27%, 0.5);
-  }
-  70% {
-    box-shadow: 0 0 0 14px hsla(11, 100%, 27%, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 hsla(11, 100%, 27%, 0);
-  }
 }

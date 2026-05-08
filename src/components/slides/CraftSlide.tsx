@@ -9,36 +9,50 @@ export default function CraftSlide() {
     <section className={styles.slide} id="craft-slide" data-slide="3">
       <FloatingBlob size="large" variant="pink" top="25%" left="25%" delay={0} />
       <FloatingBlob size="medium" variant="peach" bottom="10%" left="5%" delay={3} />
-      <FloatingBlob size="medium" variant="pink" top="15%" right="5%" delay={6} />
 
       {/* Rust accent square */}
       <div className={styles.pinkSquare} data-speed="blob" />
 
       {/* Outlined title top */}
-      <h2 className={styles.titleTop} data-speed="fast" data-title-reveal>CAPTURE</h2>
+      <h2 className={styles.titleTop} data-speed="fast" data-title-reveal>DESIGN</h2>
 
       {/* Accent label */}
-      <span className={styles.yourLabel} data-stagger>E V E R Y</span>
+      <span className={styles.yourLabel} data-stagger>C R A F T E D</span>
 
-      {/* Center image — cinematography shot */}
-      <img
-        src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=700&h=900&fit=crop"
-        alt="Cinematography"
-        className={styles.centerImage}
-        data-speed="slow"
-        data-image-reveal
-      />
+      {/* Center: Code block showcase instead of photo */}
+      <div className={styles.codeShowcase} data-speed="slow" data-image-reveal>
+        <div className={styles.codeHeader}>
+          <span className={styles.codeDot} style={{ background: '#8B2500' }} />
+          <span className={styles.codeDot} style={{ background: '#505050' }} />
+          <span className={styles.codeDot} style={{ background: '#2C2C2C' }} />
+          <span className={styles.codeFilename}>motion.tsx</span>
+        </div>
+        <pre className={styles.codeBlock}>
+          <code>
+{`const reveal = gsap.from(el, {
+  y: 60,
+  opacity: 0,
+  duration: 1.2,
+  ease: "power4.out",
+  scrollTrigger: {
+    trigger: el,
+    start: "top 80%",
+  }
+});`}
+          </code>
+        </pre>
+      </div>
 
       {/* Bold title bottom */}
-      <span className={styles.titleBottom} data-speed="fast" data-title-reveal>MOMENT</span>
+      <span className={styles.titleBottom} data-speed="fast" data-title-reveal>SYSTEMS</span>
 
       {/* Body text block */}
       <div className={styles.textBlock}>
-        <h3 className={styles.textHeading} data-stagger>The art of seeing</h3>
+        <h3 className={styles.textHeading} data-stagger>The art of interaction</h3>
         <p className={styles.textBody} data-text-fade>
-          Whether through a lens or lines of code,
-          the goal remains the same — to distill
-          complexity into something beautiful.
+          Every interface is a conversation. Through
+          deliberate motion and thoughtful composition,
+          I build experiences that feel alive.
         </p>
         <div className={styles.cta} data-stagger>
           <span>Explore Process</span>
