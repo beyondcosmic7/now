@@ -3,22 +3,15 @@
 import React from 'react';
 import styles from './AboutSlide.module.css';
 import FloatingBlob from '../FloatingBlob/FloatingBlob';
+import AnimatedMap from '../AnimatedMap/AnimatedMap';
 
 export default function AboutSlide() {
   return (
     <section className={styles.slide} id="about-slide" data-slide="2">
-      {/* Background elements */}
-      <h2 className={styles.editorialBg} data-speed="fast">
-        AKSHAN
-      </h2>
 
-      {/* Left: MASSIVE Kota city map */}
-      <div className={styles.mapHalf} data-image-reveal>
-        <img
-          src="/kota_japanese_ink_20260507_105921.png"
-          alt="Kota city map"
-          className={styles.mapImage}
-        />
+      {/* Left: Animated Kota city map — draws itself like ink painting */}
+      <div className={styles.mapHalf}>
+        <AnimatedMap />
         {/* Map text overlays */}
         <div className={styles.mapOverlay}>
           <span className={styles.mapLabel} data-stagger>Currently based in</span>
@@ -29,7 +22,7 @@ export default function AboutSlide() {
         <span className={styles.mapKanji} data-stagger>古田</span>
         {/* Pulsing location pin */}
         <div className={styles.mapPin} />
-        {/* Corner coordinates */}
+        {/* Corner label */}
         <span className={styles.mapCornerLabel}>Rajasthan, India</span>
       </div>
 
