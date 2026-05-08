@@ -3,6 +3,7 @@
 import React from 'react';
 import styles from './HeroSlide.module.css';
 import FloatingBlob from '../FloatingBlob/FloatingBlob';
+import DepthPoints from '../DepthPoints/DepthPoints';
 
 export default function HeroSlide() {
   return (
@@ -10,8 +11,11 @@ export default function HeroSlide() {
       <FloatingBlob size="medium" variant="pink" top="35%" left="20%" delay={2} />
       <FloatingBlob size="small" variant="peach" bottom="25%" right="25%" delay={5} />
 
-      {/* Left: Atmospheric — quiet, breathing space */}
+      {/* Left: Depth Points Portrait + atmospheric elements */}
       <div className={styles.atmosphereHalf}>
+        {/* 3D Particle Portrait */}
+        <DepthPoints />
+
         {/* Single thin vertical line */}
         <div className={styles.vertLine} />
 
