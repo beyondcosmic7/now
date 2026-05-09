@@ -4,6 +4,7 @@ import React, { useRef, useEffect } from 'react';
 import * as THREE from 'three';
 import styles from './DepthPoints.module.css';
 
+// ── Simplex Noise (GLSL) ─────────────────────────────
 const SIMPLEX_NOISE_GLSL = `
 vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
 vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}
@@ -51,8 +52,10 @@ float snoise(vec3 v){
 }
 `;
 
+// ── Vertex Shader ─────────────────────────────────────
 const VERTEX_SHADER = `
 varying vec2 vUv;
+varying float vDepth;
 
 uniform float u_time;
 uniform sampler2D u_depthMap;
@@ -61,22 +64,31 @@ void main() {
   vUv = uv;
   vec3 transformed = vec3(position);
 
-  // Depth displacement — pixel-aligned with photo
-  vec4 depthColor = texture2D(u_depthMap, vUv);
-  float depth = (depthColor.r + depthColor.g + depthColor.b) / 3.0;
-  transformed.z -= depth * 120.0;
+  // Sample depth — aligned 1:1 with color texture
+  vec4 dc = texture2D(u_depthMap, vUv);
+  float depth = (dc.r + dc.g + dc.b) / 3.0;
+  vDepth = depth;
 
-  // Idle breathing — very subtle vertical float
-  float breath = sin(u_time * 0.0008) * 3.0;
-  transformed.y += breath * depth;
+  // 3D displacement — gears, springs pop forward
+  transformed.z -= depth * 180.0;
 
-  gl_PointSize = 1.8;
+  // Idle mechanical tick — gears subtly oscillate
+  float tick = sin(u_time * 0.001 + depth * 6.2831) * 2.0;
+  transformed.z += tick * depth;
+
+  // Very subtle lateral drift — like the movement is breathing
+  float drift = sin(u_time * 0.0005 + vUv.x * 3.14) * 1.5;
+  transformed.x += drift * depth;
+
+  gl_PointSize = 1.6;
   gl_Position = projectionMatrix * modelViewMatrix * vec4(transformed, 1.0);
 }
 `;
 
+// ── Fragment Shader ───────────────────────────────────
 const FRAGMENT_SHADER = SIMPLEX_NOISE_GLSL + `
 varying vec2 vUv;
+varying float vDepth;
 
 uniform float u_time;
 uniform sampler2D u_diffuseMap;
@@ -85,25 +97,32 @@ uniform sampler2D u_depthMap;
 void main() {
   vec3 color = texture2D(u_diffuseMap, vUv).rgb;
 
-  // Natural gamma lift
-  color = pow(color, vec3(0.55));
-  color = clamp(color * 1.1, 0.0, 1.0);
+  // Gentle lift — the watch has dark shadows we want to see
+  color = pow(color, vec3(0.75));
+  color = clamp(color * 1.15 + 0.02, 0.0, 1.0);
 
-  // Background mask via depth
-  vec3 depthSample = texture2D(u_depthMap, vUv).rgb;
-  float depthVal = (depthSample.r + depthSample.g + depthSample.b) / 3.0;
-  float figureMask = smoothstep(0.08, 0.2, depthVal);
+  // Warm golden tint on the raised gears (high depth areas)
+  vec3 gold = vec3(0.85, 0.65, 0.25);
+  float gearGlow = smoothstep(0.4, 0.8, vDepth);
+  color = mix(color, gold, gearGlow * 0.12);
 
-  // Particle shimmer — alive, breathing
-  float noise = snoise(vec3(vUv * 18.0, u_time * 0.00025));
-  float alpha = figureMask * (0.93 + noise * 0.07);
+  // Background mask — pure black areas in depth = far away = hide
+  float figureMask = smoothstep(0.05, 0.15, vDepth);
 
+  // Living shimmer — particles glint like polished metal
+  float noise = snoise(vec3(vUv * 25.0, u_time * 0.0003));
+  float glint = smoothstep(0.6, 0.9, noise) * gearGlow * 0.2;
+  color += glint;
+
+  float alpha = figureMask * (0.92 + noise * 0.08);
   if (alpha < 0.02) discard;
+
   gl_FragColor = vec4(color, alpha);
 }
 `;
 
-const IMG_ASPECT = 896 / 1195;
+// ── Config ────────────────────────────────────────────
+const IMG_ASPECT = 1.0; // 1024×1024 — square
 
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
@@ -135,12 +154,13 @@ export default function DepthPoints() {
 
     // ── Textures ──────────────────────────────────
     const loader = new THREE.TextureLoader();
-    const diffuseMap = loader.load('/ME.jpeg');
-    const depthMap = loader.load('/ME_DEPTH_11zon.png');
+    const diffuseMap = loader.load('/WATCH.png');
+    const depthMap = loader.load('/WATCH_DEPTH.png');
 
-    // ── Geometry ──────────────────────────────────
-    const planeH = height * 0.9;
-    const planeW = planeH * IMG_ASPECT;
+    // ── Geometry — square, centered ───────────────
+    const planeSize = Math.min(width, height) * 0.85;
+    const planeW = planeSize * IMG_ASPECT;
+    const planeH = planeSize;
     const geometry = new THREE.PlaneGeometry(planeW, planeH, 400, 400);
 
     // ── Material ──────────────────────────────────
@@ -180,24 +200,24 @@ export default function DepthPoints() {
       const elapsed = Date.now() - startTime;
       material.uniforms.u_time.value = elapsed;
 
-      // Smooth mouse follow
-      mouse.x.current = lerp(mouse.x.current, mouse.x.target, 0.035);
-      mouse.y.current = lerp(mouse.y.current, mouse.y.target, 0.035);
+      // Smooth mouse follow — luxury inertia
+      mouse.x.current = lerp(mouse.x.current, mouse.x.target, 0.03);
+      mouse.y.current = lerp(mouse.y.current, mouse.y.target, 0.03);
 
-      // Idle float — gentle sine drift when no mouse
-      const idleX = Math.sin(elapsed * 0.0003) * 0.08;
-      const idleY = Math.cos(elapsed * 0.0004) * 0.04;
+      // Idle rotation — slow, clockwork-like
+      const idleX = Math.sin(elapsed * 0.00025) * 0.06;
+      const idleY = Math.cos(elapsed * 0.0002) * 0.08;
 
-      // Combine mouse + idle
-      const rotX = (mouse.y.current + idleY) * Math.PI * -0.04;
-      const rotY = (mouse.x.current + idleX) * Math.PI * -0.05;
+      // Combined rotation — mouse + idle
+      const rotX = (mouse.y.current * 0.8 + idleY) * Math.PI * -0.05;
+      const rotY = (mouse.x.current * 0.8 + idleX) * Math.PI * -0.06;
 
       points.rotation.x = rotX;
       points.rotation.y = rotY;
 
-      // Subtle position parallax
-      points.position.x = (mouse.x.current + idleX) * planeW * -0.02;
-      points.position.y = (mouse.y.current + idleY) * planeH * 0.01;
+      // Subtle parallax shift
+      points.position.x = (mouse.x.current + idleX) * planeW * -0.025;
+      points.position.y = (mouse.y.current + idleY) * planeH * 0.015;
 
       renderer.render(scene, camera);
     };
