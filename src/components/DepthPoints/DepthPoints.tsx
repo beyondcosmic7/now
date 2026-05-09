@@ -69,16 +69,48 @@ void main() {
   float depth = (dc.r + dc.g + dc.b) / 3.0;
   vDepth = depth;
 
-  // 3D displacement — gears, springs pop forward
+  // 3D displacement — gears pop forward
   transformed.z -= depth * 180.0;
 
-  // Idle mechanical tick — gears subtly oscillate
-  float tick = sin(u_time * 0.001 + depth * 6.2831) * 2.0;
-  transformed.z += tick * depth;
+  // ── Gear rotation mechanics ─────────────────────
+  // Only raised surfaces (gears) rotate — base plate stays still
+  float isGear = smoothstep(0.2, 0.45, depth);
 
-  // Very subtle lateral drift — like the movement is breathing
-  float drift = sin(u_time * 0.0005 + vUv.x * 3.14) * 1.5;
-  transformed.x += drift * depth;
+  // Polar coords from the center of the plane
+  vec2 pos2D = transformed.xy;
+  float radius = length(pos2D);
+  float theta = atan(pos2D.y, pos2D.x);
+
+  // Concentric rings — adjacent rings rotate in opposite directions
+  float ringWidth = 45.0;
+  float ringIndex = floor(radius / ringWidth);
+  float direction = mod(ringIndex, 2.0) * 2.0 - 1.0;
+
+  // Gear ratio — inner gears rotate slower, outer faster
+  float gearRatio = 1.0 / (1.0 + ringIndex * 0.4);
+
+  // Very slow continuous rotation — calm, hypnotic
+  float rotSpeed = u_time * 0.00006 * direction * gearRatio;
+  float rotation = rotSpeed * isGear;
+
+  // Apply rotation around center
+  float newTheta = theta + rotation;
+  transformed.x = cos(newTheta) * radius;
+  transformed.y = sin(newTheta) * radius;
+
+  // ── Balance wheel oscillation ───────────────────
+  // Central region oscillates back and forth like the escapement
+  float centerDist = length(vUv - 0.5);
+  float isBalance = (1.0 - smoothstep(0.08, 0.15, centerDist)) * isGear;
+  float oscillation = sin(u_time * 0.003) * 0.04 * isBalance;
+  float oscTheta = atan(transformed.y, transformed.x) + oscillation;
+  float oscR = length(transformed.xy);
+  transformed.x = mix(transformed.x, cos(oscTheta) * oscR, isBalance);
+  transformed.y = mix(transformed.y, sin(oscTheta) * oscR, isBalance);
+
+  // ── Z-axis mechanical tick ──────────────────────
+  float tick = sin(u_time * 0.0008 + depth * 6.2831) * 1.5;
+  transformed.z += tick * isGear;
 
   gl_PointSize = 1.6;
   gl_Position = projectionMatrix * modelViewMatrix * vec4(transformed, 1.0);
