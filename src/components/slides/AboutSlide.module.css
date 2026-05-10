@@ -9,7 +9,7 @@
 }
 
 /* ============================================
-   LEFT HALF — Full-bleed Kota city map
+   LEFT HALF — Kota city map
    ============================================ */
 .mapHalf {
   position: relative;
@@ -18,7 +18,6 @@
   overflow: hidden;
 }
 
-/* Gradient overlay for text legibility */
 .mapOverlay {
   position: absolute;
   bottom: 0;
@@ -65,7 +64,6 @@
   display: block;
 }
 
-/* Japanese kanji — positioned top-right, vertical */
 .mapKanji {
   position: absolute;
   top: 24px;
@@ -79,7 +77,6 @@
   z-index: 4;
 }
 
-/* Pulsing location pin */
 .mapPin {
   position: absolute;
   top: 42%;
@@ -111,7 +108,6 @@
   100% { box-shadow: 0 0 0 0 hsla(11, 100%, 27%, 0); }
 }
 
-/* Corner label */
 .mapCornerLabel {
   position: absolute;
   top: 24px;
@@ -126,7 +122,7 @@
 }
 
 /* ============================================
-   RIGHT HALF — About content with portrait
+   RIGHT HALF — About content
    ============================================ */
 .rightContent {
   position: relative;
@@ -139,14 +135,33 @@
   z-index: 4;
 }
 
-/* ── Portrait — refined small image ── */
+/* ── Portrait button — clickable, larger ── */
+.portraitBtn {
+  all: unset;
+  position: relative;
+  cursor: pointer;
+  margin-bottom: var(--space-lg);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
 .portraitWrap {
   position: relative;
-  width: 72px;
-  height: 72px;
-  margin-bottom: var(--space-lg);
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   overflow: hidden;
+  border: 2px solid transparent;
+  transition: border-color 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s ease;
+}
+
+.portraitBtn:hover .portraitWrap {
+  border-color: var(--color-rust);
+  transform: scale(1.06);
+  box-shadow: 0 8px 30px hsla(11, 100%, 27%, 0.2);
 }
 
 .portrait {
@@ -155,16 +170,49 @@
   object-fit: cover;
   object-position: center 15%;
   filter: grayscale(0.2) contrast(1.05);
+  transition: filter 0.4s ease;
 }
 
-/* Rust accent — thin ring around portrait */
-.portraitAccent {
+.portraitBtn:hover .portrait {
+  filter: grayscale(0) contrast(1.1);
+}
+
+/* Shine sweep on hover */
+.portraitShine {
   position: absolute;
-  inset: -3px;
+  inset: 0;
   border-radius: 50%;
-  border: 1px solid var(--color-rust);
-  opacity: 0.5;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    hsla(0, 0%, 100%, 0.15) 50%,
+    transparent 60%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
   pointer-events: none;
+}
+
+.portraitBtn:hover .portraitShine {
+  transform: translateX(100%);
+}
+
+/* "View Profile" hint */
+.portraitHint {
+  font-family: var(--font-body);
+  font-size: 0.55rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-charcoal-light);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: all 0.3s ease 0.1s;
+}
+
+.portraitBtn:hover .portraitHint {
+  opacity: 1;
+  transform: translateY(0);
+  color: var(--color-rust);
 }
 
 /* ── Text content ── */
@@ -205,7 +253,6 @@
   margin-bottom: var(--space-lg);
 }
 
-/* Tech stack grid */
 .techGrid {
   display: flex;
   flex-wrap: wrap;
@@ -232,7 +279,6 @@
   transform: translateY(-2px);
 }
 
-/* Stats row */
 .statRow {
   display: flex;
   gap: var(--space-xl);
@@ -258,4 +304,179 @@
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-ash);
+}
+
+/* ============================================
+   PROFILE MODAL
+   ============================================ */
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: hsla(0, 0%, 3%, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.35s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal {
+  position: relative;
+  width: min(90vw, 860px);
+  max-height: 85vh;
+  background: hsl(0, 0%, 7%);
+  border: 1px solid hsl(0, 0%, 14%);
+  border-radius: 12px;
+  overflow: hidden;
+  animation: modalSlide 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes modalSlide {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modalClose {
+  all: unset;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: hsla(0, 0%, 100%, 0.06);
+  color: var(--color-ash);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.modalClose:hover {
+  background: hsla(0, 0%, 100%, 0.12);
+  color: var(--color-white);
+  transform: rotate(90deg);
+}
+
+.modalGrid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  height: 100%;
+}
+
+/* Modal photo — left side */
+.modalPhoto {
+  position: relative;
+  overflow: hidden;
+}
+
+.modalPhoto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+  filter: contrast(1.05);
+}
+
+/* Modal content — right side */
+.modalContent {
+  padding: 40px 36px;
+  overflow-y: auto;
+  max-height: 85vh;
+}
+
+.modalLabel {
+  font-family: var(--font-body);
+  font-size: 0.55rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-rust);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.modalName {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-white);
+  margin: 0 0 4px 0;
+  line-height: 1.1;
+}
+
+.modalRole {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: var(--color-ash);
+  margin: 0;
+}
+
+.modalDivider {
+  width: 40px;
+  height: 1px;
+  background: var(--color-rust);
+  margin: 24px 0;
+  opacity: 0.5;
+}
+
+.modalSection {
+  margin-bottom: 20px;
+}
+
+.modalSectionTitle {
+  font-family: var(--font-accent);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ash);
+  margin: 0 0 8px 0;
+}
+
+.modalText {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.modalTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.modalTags span {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ash);
+  padding: 4px 10px;
+  border: 1px solid hsl(0, 0%, 18%);
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.modalTags span:hover {
+  border-color: var(--color-rust);
+  color: var(--color-rust);
 }
