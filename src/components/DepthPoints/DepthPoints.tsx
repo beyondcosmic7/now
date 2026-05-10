@@ -129,24 +129,24 @@ uniform sampler2D u_depthMap;
 void main() {
   vec3 color = texture2D(u_diffuseMap, vUv).rgb;
 
-  // Gentle lift — the watch has dark shadows we want to see
-  color = pow(color, vec3(0.75));
+  // Gentle lift — warm candlelit shadows
+  color = pow(color, vec3(0.72));
   color = clamp(color * 1.15 + 0.02, 0.0, 1.0);
 
-  // Warm golden tint on the raised gears (high depth areas)
-  vec3 gold = vec3(0.85, 0.65, 0.25);
+  // Warm cypress wood tint on raised gears
+  vec3 woodWarm = vec3(0.7, 0.45, 0.2);
   float gearGlow = smoothstep(0.4, 0.8, vDepth);
-  color = mix(color, gold, gearGlow * 0.12);
+  color = mix(color, woodWarm, gearGlow * 0.15);
 
   // Background mask — pure black areas in depth = far away = hide
   float figureMask = smoothstep(0.05, 0.15, vDepth);
 
-  // Living shimmer — particles glint like polished metal
-  float noise = snoise(vec3(vUv * 25.0, u_time * 0.0003));
-  float glint = smoothstep(0.6, 0.9, noise) * gearGlow * 0.2;
+  // Aged wood shimmer — soft candlelight flicker
+  float noise = snoise(vec3(vUv * 20.0, u_time * 0.00025));
+  float glint = smoothstep(0.65, 0.92, noise) * gearGlow * 0.15;
   color += glint;
 
-  float alpha = figureMask * (0.92 + noise * 0.08);
+  float alpha = figureMask * (0.93 + noise * 0.07);
   if (alpha < 0.02) discard;
 
   gl_FragColor = vec4(color, alpha);
@@ -186,8 +186,8 @@ export default function DepthPoints() {
 
     // ── Textures ──────────────────────────────────
     const loader = new THREE.TextureLoader();
-    const diffuseMap = loader.load('/WATCH.png');
-    const depthMap = loader.load('/WATCH_DEPTH.png');
+    const diffuseMap = loader.load('/KARAKURI.png');
+    const depthMap = loader.load('/KARAKURI_DEPTH.png');
 
     // ── Geometry — square, centered ───────────────
     const planeSize = Math.min(width, height) * 0.85;

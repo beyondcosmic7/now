@@ -5,29 +5,40 @@ import styles from './AboutSlide.module.css';
 import FloatingBlob from '../FloatingBlob/FloatingBlob';
 import AnimatedMap from '../AnimatedMap/AnimatedMap';
 
-export default function AboutSlide() {
+interface AboutSlideProps {
+  containerAnimation?: gsap.core.Tween | null;
+}
+
+export default function AboutSlide({ containerAnimation }: AboutSlideProps) {
   return (
     <section className={styles.slide} id="about-slide" data-slide="2">
 
-      {/* Left: Animated Kota city map — draws itself like ink painting */}
+      {/* Left: Animated Kota city map */}
       <div className={styles.mapHalf}>
-        <AnimatedMap />
-        {/* Map text overlays */}
+        <AnimatedMap containerAnimation={containerAnimation} />
         <div className={styles.mapOverlay}>
           <span className={styles.mapLabel} data-stagger>Currently based in</span>
           <h4 className={styles.mapCity} data-stagger>KOTA</h4>
           <span className={styles.mapCoords} data-stagger>25.2138° N, 75.8648° E</span>
         </div>
-        {/* Kanji accent top-right */}
         <span className={styles.mapKanji} data-stagger>古田</span>
-        {/* Pulsing location pin */}
         <div className={styles.mapPin} />
-        {/* Corner label */}
         <span className={styles.mapCornerLabel}>Rajasthan, India</span>
       </div>
 
-      {/* Right: About content */}
+      {/* Right: About content with portrait */}
       <div className={styles.rightContent}>
+        {/* Portrait — refined, small, positioned at top */}
+        <div className={styles.portraitWrap} data-stagger>
+          <img
+            src="/ME.jpeg"
+            alt="Akshan Khan"
+            className={styles.portrait}
+            loading="lazy"
+          />
+          <div className={styles.portraitAccent} />
+        </div>
+
         <div className={styles.sectionLabel} data-stagger>
           <span className={styles.labelLine} />
           <span>About</span>
@@ -44,7 +55,7 @@ export default function AboutSlide() {
           every animation has purpose.
         </p>
 
-        {/* Tech stack showcase */}
+        {/* Tech stack */}
         <div className={styles.techGrid} data-stagger>
           <span className={styles.techItem}>React</span>
           <span className={styles.techItem}>Next.js</span>

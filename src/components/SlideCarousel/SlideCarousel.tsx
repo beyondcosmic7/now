@@ -27,6 +27,7 @@ export default function SlideCarousel() {
   const trackRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<ScrollTrigger | null>(null);
   const [currentSlide, setCurrentSlide] = useState(1);
+  const [mainTween, setMainTween] = useState<gsap.core.Tween | null>(null);
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
@@ -63,6 +64,7 @@ export default function SlideCarousel() {
         });
 
         triggerRef.current = mainTween.scrollTrigger as ScrollTrigger;
+        setMainTween(mainTween);
 
         // ===== PARALLAX LAYERS =====
         slides.forEach((slide) => {
@@ -248,7 +250,7 @@ export default function SlideCarousel() {
       <div ref={wrapperRef} className={styles.wrapper}>
         <div ref={trackRef} className={styles.track}>
           <HeroSlide />
-          <AboutSlide />
+          <AboutSlide containerAnimation={mainTween} />
           <CraftSlide />
           <WorksSlide />
           <PhilosophySlide />
