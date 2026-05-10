@@ -56,23 +56,23 @@ export default function AboutSlide({ containerAnimation }: AboutSlideProps) {
         </div>
 
         <h3 className={styles.heading} data-stagger>
-          Developer &amp;<br />Design Engineer
+          Web Developer &amp;<br />Photographer
         </h3>
 
         <p className={styles.bodyText} data-text-fade>
-          I build interfaces that feel alive. Obsessed with 
-          the details — from micro-interactions to fluid 
-          page transitions. Every pixel is intentional,
-          every animation has purpose.
+          I build websites that feel alive and capture 
+          moments that tell stories. From pixel-perfect 
+          interfaces to cinematic compositions — obsessed 
+          with every detail.
         </p>
 
         <div className={styles.techGrid} data-stagger>
           <span className={styles.techItem}>React</span>
           <span className={styles.techItem}>Next.js</span>
-          <span className={styles.techItem}>GSAP</span>
           <span className={styles.techItem}>Three.js</span>
           <span className={styles.techItem}>TypeScript</span>
-          <span className={styles.techItem}>Figma</span>
+          <span className={styles.techItem}>Lightroom</span>
+          <span className={styles.techItem}>Photography</span>
         </div>
 
         <div className={styles.statRow} data-stagger>
@@ -114,17 +114,17 @@ export default function AboutSlide({ containerAnimation }: AboutSlideProps) {
               <div className={styles.modalContent}>
                 <span className={styles.modalLabel}>Profile</span>
                 <h2 className={styles.modalName}>Akshan Khan</h2>
-                <p className={styles.modalRole}>Developer & Design Engineer</p>
+                <p className={styles.modalRole}>Web Developer & Photographer</p>
 
                 <div className={styles.modalDivider} />
 
                 <div className={styles.modalSection}>
                   <h4 className={styles.modalSectionTitle}>Background</h4>
                   <p className={styles.modalText}>
-                    Based in Kota, India. Specializing in crafting high-fidelity
-                    web experiences with a focus on motion design, 3D visuals,
-                    and pixel-perfect interfaces. Passionate about the intersection
-                    of engineering and aesthetics.
+                    Based in Kota, India. I build high-fidelity web experiences
+                    and capture cinematic photography. Passionate about the 
+                    intersection of code and visual storytelling — where 
+                    pixels meet light.
                   </p>
                 </div>
 
@@ -140,10 +140,10 @@ export default function AboutSlide({ containerAnimation }: AboutSlideProps) {
                   <div className={styles.modalTags}>
                     <span>Creative Coding</span>
                     <span>Motion Design</span>
-                    <span>3D Visuals</span>
+                    <span>Street Photography</span>
                     <span>Japanese Aesthetics</span>
-                    <span>Typography</span>
-                    <span>Open Source</span>
+                    <span>Cinematic Color</span>
+                    <span>Web Performance</span>
                   </div>
                 </div>
 

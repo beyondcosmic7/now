@@ -31,7 +31,7 @@ export default function HeroSlide() {
         {/* Role — tiny, understated */}
         <div className={styles.roleRow} data-stagger>
           <span className={styles.roleLine} />
-          <span className={styles.roleText}>Developer & Design Engineer</span>
+          <span className={styles.roleText}>Web Developer & Photographer</span>
         </div>
 
         {/* The name — refined, not loud */}
@@ -42,8 +42,8 @@ export default function HeroSlide() {
 
         {/* Brief descriptor */}
         <p className={styles.descriptor} data-text-fade>
-          Crafting interfaces that feel<br />
-          alive — where every detail matters.
+          Building digital experiences &<br />
+          capturing moments through the lens.
         </p>
 
         {/* Minimal CTA */}

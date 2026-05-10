@@ -3,58 +3,97 @@
 import React from 'react';
 import styles from './WorksSlide.module.css';
 import FloatingBlob from '../FloatingBlob/FloatingBlob';
-import RotatingBadge from '../RotatingBadge/RotatingBadge';
+
+const PROJECTS = [
+  {
+    title: 'Skyfall Portfolio',
+    tech: 'Next.js · GSAP · Three.js',
+    url: 'https://brittanychiang.com',
+    year: '2024',
+  },
+  {
+    title: 'E-Commerce Platform',
+    tech: 'React · Node · Stripe',
+    url: 'https://www.apple.com/store',
+    year: '2024',
+  },
+  {
+    title: 'Photography Studio',
+    tech: 'Next.js · Framer Motion',
+    url: 'https://unsplash.com',
+    year: '2023',
+  },
+];
 
 export default function WorksSlide() {
   return (
     <section className={styles.slide} id="works-slide" data-slide="4">
-      <FloatingBlob size="large" variant="pink" top="15%" left="25%" delay={1} />
+      <FloatingBlob size="large" variant="pink" top="15%" left="5%" delay={1} />
 
-      {/* Geometric design element instead of photo */}
-      <div className={styles.designElement} data-speed="slow" data-image-reveal>
-        <div className={styles.geoOuter} />
-        <div className={styles.geoInner} />
-        <div className={styles.geoCross}>
-          <div className={styles.geoCrossH} />
-          <div className={styles.geoCrossV} />
+      {/* Left: Title + text */}
+      <div className={styles.leftContent}>
+        <div className={styles.sectionLabel} data-stagger>
+          <span className={styles.labelLine} />
+          <span>Selected Works</span>
         </div>
-        <span className={styles.geoLabel}>AK.24</span>
+
+        <h2 className={styles.title} data-speed="fast" data-title-reveal>
+          LIVE<br />WORKS
+        </h2>
+
+        <p className={styles.bodyText} data-text-fade>
+          Websites built with performance and aesthetics
+          in mind. Hover to preview, click to visit.
+        </p>
       </div>
 
-      {/* Big centered title */}
-      <h2 className={styles.title} data-speed="fast" data-title-reveal>
-        PIXEL<br />
-        BY<br />
-        PIXEL
-      </h2>
+      {/* Right: Live preview cards */}
+      <div className={styles.previewGrid}>
+        {PROJECTS.map((project, i) => (
+          <a
+            key={project.title}
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.previewCard}
+            data-stagger
+          >
+            {/* Browser frame */}
+            <div className={styles.browserFrame}>
+              <div className={styles.browserBar}>
+                <span className={styles.browserDot} />
+                <span className={styles.browserDot} />
+                <span className={styles.browserDot} />
+                <span className={styles.browserUrl}>{new URL(project.url).hostname}</span>
+              </div>
+              <div className={styles.iframeWrap}>
+                <iframe
+                  src={project.url}
+                  title={project.title}
+                  className={styles.iframe}
+                  loading="lazy"
+                  sandbox="allow-scripts allow-same-origin"
+                  tabIndex={-1}
+                />
+              </div>
+            </div>
 
-      {/* Text columns below */}
-      <div className={styles.textColumns}>
-        <div className={styles.textCol} data-text-fade>
-          <p>
-            Every interface is a deliberate composition. From
-            layout grids to motion curves, the rhythm
-            of visual hierarchy drives every decision
-            in the design process.
-          </p>
-        </div>
-        <div className={styles.textCol} data-text-fade>
-          <p>
-            Blending technical precision with artistic intuition.
-            Code that performs, designs that resonate,
-            animations that breathe — a unified creative vision,{' '}
-            <strong>view portfolio</strong>.
-          </p>
-        </div>
-      </div>
+            {/* Hover overlay */}
+            <div className={styles.cardOverlay}>
+              <span className={styles.visitLabel}>Visit Site →</span>
+            </div>
 
-      {/* Rotating badge on far right */}
-      <div className={styles.badgeContainer} data-stagger>
-        <RotatingBadge
-          text="★ WEB DEV ★ UI/UX ★ MOTION "
-          centerSymbol="AK"
-          size={160}
-        />
+            {/* Info below card */}
+            <div className={styles.cardInfo}>
+              <span className={styles.cardNum}>{String(i + 1).padStart(2, '0')}</span>
+              <div className={styles.cardMeta}>
+                <span className={styles.cardTitle}>{project.title}</span>
+                <span className={styles.cardTech}>{project.tech}</span>
+              </div>
+              <span className={styles.cardYear}>{project.year}</span>
+            </div>
+          </a>
+        ))}
       </div>
     </section>
   );

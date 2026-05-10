@@ -36,7 +36,7 @@ export default function ContactSlide({ onRewind }: ContactSlideProps) {
         </div>
 
         <span className={styles.copyright}>
-          © 2024 Akshan Khan. All rights reserved.
+          © 2025 Akshan Khan. All rights reserved.
         </span>
       </div>
     </section>

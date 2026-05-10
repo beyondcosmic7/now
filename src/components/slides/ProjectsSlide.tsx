@@ -5,9 +5,9 @@ import styles from './ProjectsSlide.module.css';
 import FloatingBlob from '../FloatingBlob/FloatingBlob';
 
 const PROJECTS = [
-  { num: '01', title: 'Skyfall Portfolio', tech: 'Next.js · GSAP · CSS', year: '2024' },
-  { num: '02', title: 'E-Commerce Platform', tech: 'React · Node · Stripe', year: '2024' },
-  { num: '03', title: 'Brand Identity System', tech: 'Figma · Motion · SVG', year: '2023' },
+  { num: '01', title: 'Portfolio Website', tech: 'Next.js · GSAP · Three.js', year: '2024' },
+  { num: '02', title: 'Photography Gallery', tech: 'React · Lightroom · WebGL', year: '2024' },
+  { num: '03', title: 'E-Commerce Store', tech: 'Next.js · Stripe · Node', year: '2023' },
 ];
 
 export default function ProjectsSlide() {

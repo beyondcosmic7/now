@@ -14,10 +14,10 @@ export default function CraftSlide() {
       <div className={styles.pinkSquare} data-speed="blob" />
 
       {/* Outlined title top */}
-      <h2 className={styles.titleTop} data-speed="fast" data-title-reveal>DESIGN</h2>
+      <h2 className={styles.titleTop} data-speed="fast" data-title-reveal>WEB</h2>
 
       {/* Accent label */}
-      <span className={styles.yourLabel} data-stagger>C R A F T E D</span>
+      <span className={styles.yourLabel} data-stagger>S E R V I C E S</span>
 
       {/* Center: Code block showcase instead of photo */}
       <div className={styles.codeShowcase} data-speed="slow" data-image-reveal>
@@ -44,18 +44,19 @@ export default function CraftSlide() {
       </div>
 
       {/* Bold title bottom */}
-      <span className={styles.titleBottom} data-speed="fast" data-title-reveal>SYSTEMS</span>
+      <span className={styles.titleBottom} data-speed="fast" data-title-reveal>& LENS</span>
 
       {/* Body text block */}
       <div className={styles.textBlock}>
-        <h3 className={styles.textHeading} data-stagger>The art of interaction</h3>
+        <h3 className={styles.textHeading} data-stagger>Two crafts, one vision</h3>
         <p className={styles.textBody} data-text-fade>
-          Every interface is a conversation. Through
-          deliberate motion and thoughtful composition,
-          I build experiences that feel alive.
+          Building performant websites with modern
+          frameworks. Capturing stories through
+          cinematic photography. Both demand
+          precision, patience, and an eye for detail.
         </p>
         <div className={styles.cta} data-stagger>
-          <span>Explore Process</span>
+          <span>View Works</span>
           <span className={styles.ctaArrow} data-cta-arrow>————→</span>
         </div>
       </div>
