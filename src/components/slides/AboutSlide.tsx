@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import styles from './AboutSlide.module.css';
 import FloatingBlob from '../FloatingBlob/FloatingBlob';
 import AnimatedMap from '../AnimatedMap/AnimatedMap';
@@ -91,7 +92,7 @@ export default function AboutSlide({ containerAnimation }: AboutSlideProps) {
       </div>
 
       {/* ── Profile Modal ── */}
-      {modalOpen && (
+      {modalOpen && createPortal(
         <div className={styles.modalBackdrop} onClick={() => setModalOpen(false)}>
           <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
             {/* Close button */}
@@ -156,7 +157,8 @@ export default function AboutSlide({ containerAnimation }: AboutSlideProps) {
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       <FloatingBlob size="small" variant="pink" top="70%" right="5%" delay={2} />
