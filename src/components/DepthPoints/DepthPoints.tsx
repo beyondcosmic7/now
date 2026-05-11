@@ -123,10 +123,20 @@ function lerp(a: number, b: number, t: number) {
 export default function DepthPoints() {
   const containerRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<number>(0);
+  const isVisibleRef = useRef<boolean>(true);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
+
+    // IntersectionObserver to pause rendering when off-screen
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting;
+      },
+      { rootMargin: '100px' }
+    );
+    observer.observe(container);
 
     const width = Math.max(container.offsetWidth, window.innerWidth / 2);
     const height = Math.max(container.offsetHeight, window.innerHeight);
@@ -189,6 +199,9 @@ export default function DepthPoints() {
 
     const animate = () => {
       frameRef.current = requestAnimationFrame(animate);
+
+      if (!isVisibleRef.current) return;
+
       const elapsed = Date.now() - startTime;
       material.uniforms.u_time.value = elapsed;
 
@@ -228,6 +241,7 @@ export default function DepthPoints() {
 
     // ── Cleanup ───────────────────────────────────
     return () => {
+      observer.disconnect();
       cancelAnimationFrame(frameRef.current);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('resize', onResize);

@@ -1,0 +1,3 @@
+## 2024-05-11 - Three.js Off-Screen Rendering Leak
+**Learning:** In horizontal scroll architectures (like `SlideCarousel`), all slides remain mounted in the DOM. Expensive WebGL components (like `DepthPoints` with a 160k vertex geometry and simplex noise fragment shader) continue executing their `requestAnimationFrame` loops at 60fps even when fully scrolled out of view, causing severe CPU/GPU drain.
+**Action:** Always wrap `requestAnimationFrame` loops in 3D/Canvas components with an `IntersectionObserver` to pause rendering (`if (!isVisible) return`) when the container is not intersecting the viewport.
