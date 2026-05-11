@@ -85,28 +85,60 @@ varying float vDepth;
 uniform float u_time;
 uniform sampler2D u_diffuseMap;
 uniform sampler2D u_depthMap;
+uniform float u_lightMode;
 
 void main() {
   vec3 color = texture2D(u_diffuseMap, vUv).rgb;
 
-  // Gentle lift — warm candlelit shadows
-  color = pow(color, vec3(0.72));
-  color = clamp(color * 1.15 + 0.02, 0.0, 1.0);
+  // Gamma lift for dark areas
+  color = pow(color, vec3(0.78));
 
-  // Warm cypress wood tint on raised gears
-  vec3 woodWarm = vec3(0.7, 0.45, 0.2);
-  float gearGlow = smoothstep(0.4, 0.8, vDepth);
-  color = mix(color, woodWarm, gearGlow * 0.15);
+  // Desaturate — pull vibrant Spider-Verse into muted zen territory
+  float luma = dot(color, vec3(0.299, 0.587, 0.114));
 
-  // Background mask — pure black areas in depth = far away = hide
-  float figureMask = smoothstep(0.05, 0.15, vDepth);
+  if (u_lightMode > 0.5) {
+    // ── LIGHT MODE: Dark ink painting on Washi paper ──
+    // Keep more color saturation
+    color = mix(vec3(luma), color, 0.65);
 
-  // Aged wood shimmer — soft candlelight flicker
-  float noise = snoise(vec3(vUv * 20.0, u_time * 0.00025));
-  float glint = smoothstep(0.65, 0.92, noise) * gearGlow * 0.15;
+    // Invert lightness — make light areas dark, keep structure
+    color = vec3(1.0) - color;
+
+    // Warm sumi ink tint
+    vec3 sumiInk = vec3(0.18, 0.12, 0.08);
+    color = mix(color, sumiInk, 0.3);
+
+    // Darken overall for strong presence
+    color *= 0.7;
+
+    // Depth-based warmth — raised areas get richer
+    float raised = smoothstep(0.3, 0.75, vDepth);
+    vec3 inkWarm = vec3(0.35, 0.18, 0.08);
+    color = mix(color, inkWarm, raised * 0.2);
+  } else {
+    // ── DARK MODE: Original cinematic look ──
+    color = mix(vec3(luma), color, 0.35); // Heavy desaturation
+
+    // Warm sabi tint
+    vec3 sabiTint = vec3(0.55, 0.28, 0.15);
+    color = mix(color, sabiTint, 0.12);
+
+    // Depth-based warmth
+    float raised = smoothstep(0.3, 0.75, vDepth);
+    vec3 inkWarm = vec3(0.6, 0.35, 0.18);
+    color = mix(color, inkWarm, raised * 0.1);
+  }
+
+  // Background mask
+  float figureMask = smoothstep(0.04, 0.12, vDepth);
+
+  // Living shimmer — ink particles catching light
+  float noise = snoise(vec3(vUv * 18.0, u_time * 0.0002));
+  float raised2 = smoothstep(0.3, 0.75, vDepth);
+  float glint = smoothstep(0.6, 0.9, noise) * raised2 * 0.12;
   color += glint;
 
-  float alpha = figureMask * (0.93 + noise * 0.07);
+  float alpha = figureMask * (0.94 + noise * 0.06);
   if (alpha < 0.02) discard;
 
   gl_FragColor = vec4(color, alpha);
@@ -114,7 +146,7 @@ void main() {
 `;
 
 // ── Config ────────────────────────────────────────────
-const IMG_ASPECT = 1.0; // 1024×1024 — square
+const IMG_ASPECT = 3840 / 2160; // 16:9 ultrawide
 
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
@@ -123,6 +155,24 @@ function lerp(a: number, b: number, t: number) {
 export default function DepthPoints() {
   const containerRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<number>(0);
+  const materialRef = useRef<THREE.ShaderMaterial | null>(null);
+
+  // Watch for theme changes and update the shader uniform
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      const theme = document.documentElement.getAttribute('data-theme');
+      if (materialRef.current) {
+        materialRef.current.uniforms.u_lightMode.value = theme === 'light' ? 1.0 : 0.0;
+      }
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -146,14 +196,18 @@ export default function DepthPoints() {
 
     // ── Textures ──────────────────────────────────
     const loader = new THREE.TextureLoader();
-    const diffuseMap = loader.load('/KARAKURI.png');
-    const depthMap = loader.load('/KARAKURI_DEPTH.png');
+    const diffuseMap = loader.load('/miguel-ohara-spider-3840x2160-11632.jpeg');
+    const depthMap = loader.load('/miguel_depth.png');
 
-    // ── Geometry — square, centered ───────────────
-    const planeSize = Math.min(width, height) * 0.85;
-    const planeW = planeSize * IMG_ASPECT;
-    const planeH = planeSize;
-    const geometry = new THREE.PlaneGeometry(planeW, planeH, 400, 400);
+    // ── Geometry — 16:9, centered ─────────────────
+    // Massive backdrop
+    const planeH = height * 1.35;
+    const planeW = planeH * IMG_ASPECT;
+    const geometry = new THREE.PlaneGeometry(planeW, planeH, 500, 280);
+
+    // ── Check initial theme ──────────────────────
+    const initialTheme = document.documentElement.getAttribute('data-theme');
+    const initialLightMode = initialTheme === 'light' ? 1.0 : 0.0;
 
     // ── Material ──────────────────────────────────
     const material = new THREE.ShaderMaterial({
@@ -163,10 +217,13 @@ export default function DepthPoints() {
         u_time: { value: 0 },
         u_diffuseMap: { value: diffuseMap },
         u_depthMap: { value: depthMap },
+        u_lightMode: { value: initialLightMode },
       },
       transparent: true,
       depthWrite: false,
     });
+
+    materialRef.current = material;
 
     // ── Points ────────────────────────────────────
     const points = new THREE.Points(geometry, material);
@@ -208,7 +265,7 @@ export default function DepthPoints() {
       points.rotation.y = rotY;
 
       // Subtle parallax shift
-      points.position.x = (mouse.x.current + idleX) * planeW * -0.025;
+      points.position.x = (mouse.x.current + idleX) * planeW * -0.015;
       points.position.y = (mouse.y.current + idleY) * planeH * 0.015;
 
       renderer.render(scene, camera);
@@ -231,6 +288,7 @@ export default function DepthPoints() {
       cancelAnimationFrame(frameRef.current);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('resize', onResize);
+      materialRef.current = null;
       renderer.dispose();
       geometry.dispose();
       material.dispose();

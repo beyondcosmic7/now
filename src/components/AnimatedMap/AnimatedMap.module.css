@@ -5,8 +5,8 @@
   height: 100%;
   overflow: hidden;
   opacity: 0;
-  transition: opacity 0.8s ease;
-  background: #0E0E0E; /* Deep ink background */
+  transition: opacity 0.8s ease, background 0.8s ease;
+  background: var(--color-bg); /* Use theme bg instead of hardcoded dark */
 }
 
 /* Texture overlay for paper feel */
@@ -25,10 +25,18 @@
   opacity: 1;
 }
 
-/* Ensure the injected SVG fills everything */
+/* Ensure the injected SVG fills everything and uses dark mode by default */
 .mapContainer :global(svg) {
   display: block;
   width: 100% !important;
   height: 100% !important;
   object-fit: cover;
+  filter: invert(1) contrast(0.8) brightness(0.4) sepia(0.2) hue-rotate(5deg);
+  transition: filter 0.8s ease;
+}
+
+/* Light Mode SVG Map */
+:global([data-theme='light']) .mapContainer :global(svg) {
+  /* No invert for light mode, slightly warmer/softer */
+  filter: invert(0) contrast(0.85) brightness(0.95) sepia(0.15) hue-rotate(5deg);
 }

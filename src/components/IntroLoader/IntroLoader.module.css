@@ -68,14 +68,74 @@
   animation: inkDripIn 1.5s cubic-bezier(0.25, 0.1, 0.25, 1) 0.3s forwards;
 }
 
+/* Terminal Container */
+.terminalContainer {
+  position: relative;
+  width: min(90vw, 600px);
+  background: hsla(0, 0%, 5%, 0.85);
+  border: 1px solid hsla(0, 0%, 100%, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px hsla(0, 0%, 0%, 0.5);
+  z-index: 2;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+}
+
+.terminalHeader {
+  height: 32px;
+  background: hsla(0, 0%, 10%, 1);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  border-bottom: 1px solid hsla(0, 0%, 100%, 0.05);
+  gap: 8px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.terminalTitle {
+  margin-left: auto;
+  font-size: 0.6rem;
+  color: var(--color-charcoal-light);
+  letter-spacing: 0.05em;
+}
+
+.terminalBody {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.typeWriter {
+  margin: 0 0 10px 0;
+  font-size: 0.75rem;
+  color: var(--color-ash);
+  opacity: 0;
+  animation: typeReveal 0.1s forwards;
+}
+
+.accent {
+  color: #E4A834; /* Elegant warm gold */
+  font-weight: 600;
+}
+
+@keyframes typeReveal {
+  to { opacity: 1; }
+}
+
 /* SKYFALL SVG */
 .wordContainer {
   position: relative;
-  width: min(85vw, 900px);
+  width: 100%;
+  max-width: 260px;
+  margin: 2rem 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  z-index: 2;
+  align-items: flex-start;
 }
 
 .skyfallSvg {
@@ -86,61 +146,48 @@
 
 .outlineText {
   font-family: 'Noto Serif JP', 'Georgia', serif;
-  font-size: 130px;
+  font-size: 38px;
   font-weight: 900;
   letter-spacing: 0.08em;
   fill: none;
-  stroke: #2C2C2C;
+  stroke: #444;
   stroke-width: 1;
 }
 
 .filledText {
   font-family: 'Noto Serif JP', 'Georgia', serif;
-  font-size: 130px;
+  font-size: 38px;
   font-weight: 900;
   letter-spacing: 0.08em;
-  fill: #FAF8F5;
+  fill: #E4A834; /* Elegant warm gold */
 }
 
-/* Brush underline */
-.brushLine {
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    #8B2500 15%,
-    #8B2500 85%,
-    transparent 100%
-  );
-  margin-top: 16px;
-  transition: width 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-  opacity: 0.6;
-}
-
-/* Progress */
-.progressInfo {
-  position: absolute;
-  bottom: 60px;
-  right: 50px;
+/* Progress Wrapper */
+.progressWrapper {
   display: flex;
-  align-items: baseline;
-  gap: 2px;
-  z-index: 2;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
 }
 
-.progressNum {
-  font-family: var(--font-accent);
-  font-size: 0.9rem;
-  font-weight: 300;
-  letter-spacing: 0.15em;
-  color: #505050;
-  font-variant-numeric: tabular-nums;
+.progressBar {
+  width: 100%;
+  height: 2px;
+  background: hsla(0, 0%, 100%, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
 }
 
-.progressLabel {
-  font-family: var(--font-body);
-  font-size: 0.6rem;
-  color: #505050;
+.progressFill {
+  height: 100%;
+  background: var(--color-rust);
+  transition: width 0.1s linear;
+}
+
+.progressText {
+  font-size: 0.65rem;
+  color: var(--color-rust);
+  letter-spacing: 0.1em;
 }
 
 /* Tagline */

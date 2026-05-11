@@ -29,27 +29,8 @@ export default function AboutSlide({ containerAnimation }: AboutSlideProps) {
         <span className={styles.mapCornerLabel}>Rajasthan, India</span>
       </div>
 
-      {/* Right: About content */}
-      <div className={styles.rightContent}>
-        {/* Portrait — clickable, larger */}
-        <button
-          className={styles.portraitBtn}
-          onClick={() => setModalOpen(true)}
-          data-stagger
-          aria-label="View full profile"
-        >
-          <div className={styles.portraitWrap}>
-            <img
-              src="/ME.jpeg"
-              alt="Akshan Khan"
-              className={styles.portrait}
-              loading="lazy"
-            />
-            <div className={styles.portraitShine} />
-          </div>
-          <span className={styles.portraitHint}>View Profile</span>
-        </button>
-
+      {/* Middle: Text Content (40%) */}
+      <div className={styles.textHalf}>
         <div className={styles.sectionLabel} data-stagger>
           <span className={styles.labelLine} />
           <span>About</span>
@@ -88,6 +69,24 @@ export default function AboutSlide({ containerAnimation }: AboutSlideProps) {
             <span className={styles.statNum}>∞</span>
             <span className={styles.statLabel}>Curiosity</span>
           </div>
+        </div>
+      </div>
+
+      {/* Right: Full Bleed Image (25%) */}
+      <div 
+        className={styles.imageHalf} 
+        onClick={() => setModalOpen(true)}
+        data-stagger
+        aria-label="View full profile"
+      >
+        <img
+          src="/ME.jpeg"
+          alt="Akshan Khan"
+          className={styles.fullPortrait}
+          loading="lazy"
+        />
+        <div className={styles.profileBtnOverlay}>
+          <span className={styles.overlayText}>View Profile</span>
         </div>
       </div>
 
@@ -150,7 +149,7 @@ export default function AboutSlide({ containerAnimation }: AboutSlideProps) {
                 <div className={styles.modalSection}>
                   <h4 className={styles.modalSectionTitle}>Contact</h4>
                   <p className={styles.modalText}>
-                    akshankhan@example.com<br />
+                    beyond.cosmic7@gmail.com<br />
                     github.com/beyondcosmic7
                   </p>
                 </div>

@@ -61,7 +61,7 @@ export default function AnimatedMap({ containerAnimation }: AnimatedMapProps) {
         svgEl.style.height = '100%';
         svgEl.style.position = 'absolute';
         svgEl.style.inset = '0';
-        svgEl.style.filter = 'invert(1) contrast(0.8) brightness(0.4) sepia(0.2) hue-rotate(5deg)';
+        svgEl.style.inset = '0';
 
         // Set all layers to invisible initially
         LAYER_SEQUENCE.forEach(({ id }) => {

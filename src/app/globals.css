@@ -3,8 +3,8 @@
    墨 (sumi) — Wabi-Sabi Aesthetic
    ============================================ */
 
-/* --- Google Fonts Import: Japanese-inspired typography --- */
-@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700;800&family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@200;300;400;500;600;700;900&display=swap');
+/* --- Google Fonts Import: Luxury Tech & Cinematic + Japanese Serifs for Intro --- */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Outfit:wght@100;200;300;400;500;600;700;800;900&family=Shippori+Mincho:wght@400;500;600;700;800&family=Noto+Serif+JP:wght@200;300;400;500;600;700;900&display=swap');
 
 /* --- CSS Custom Properties --- */
 :root {
@@ -43,10 +43,58 @@
   --color-gray-200: #2C2C2C;
   --color-gray-400: #505050;
 
-  /* ===== Typography — Japanese-inspired ===== */
-  --font-display: 'Noto Serif JP', 'Shippori Mincho', 'Georgia', serif;
-  --font-body: 'Zen Kaku Gothic New', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-accent: 'Shippori Mincho', 'Noto Serif JP', serif;
+  /* Contact gradient for Dark Mode */
+  --color-contact-bg-inner: #2a2220;
+  --color-contact-bg-mid: #151110;
+  --color-contact-bg-outer: #0a0a0a;
+}
+
+/* ===== Light Mode — Washi (Japanese Paper) Aesthetic ===== */
+[data-theme='light'] {
+  --color-bg: #F2EFE9; /* Warm textured off-white */
+  --color-text: #1A1A1A; /* Deep sumi ink */
+  --color-text-secondary: #5C5C5C;
+  
+  /* Rust remains the same, gorgeous contrast on light paper */
+  --color-rust: #8B2500;
+  --color-rust-soft: hsla(11, 100%, 27%, 0.15);
+  --color-rust-glow: hsla(11, 100%, 27%, 0.1);
+  --color-rust-deep: #4A1400;
+  
+  /* Charcoals lighten for borders/backgrounds */
+  --color-charcoal: #DCD9D2;
+  --color-charcoal-light: #C0BDB6;
+  --color-slate: #8A8884;
+  --color-ash: #7A7A7A;
+  
+  --color-ink-wash: hsla(0, 0%, 0%, 0.04);
+  --color-ink-accent: hsla(11, 60%, 30%, 0.08);
+
+  /* Contact gradient for Light Mode */
+  --color-contact-bg-inner: #E8DCC8;
+  --color-contact-bg-mid: #EFE8D9;
+  --color-contact-bg-outer: #F2EFE9;
+
+  --color-gradient-start: var(--color-rust);
+  --color-gradient-end: var(--color-rust-deep);
+  --color-black: #FAF8F5;
+  --color-white: #000000;
+  --color-gray-100: #F5F2EB;
+  --color-gray-200: #DCD9D2;
+  --color-gray-400: #C0BDB6;
+}
+
+:root {
+  /* ===== Typography — Cohesive Luxury ===== */
+  --font-display: 'Outfit', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+  --font-accent: 'Outfit', sans-serif;
+  
+  /* Old Serif font specifically for the intro/landing page text */
+  --font-intro: 'Noto Serif JP', 'Shippori Mincho', 'Georgia', serif;
+  
+  /* Premium display serif for the hero name — unique standout feel */
+  --font-hero: 'Cormorant Garamond', 'Georgia', serif;
 
   /* Font Sizes */
   --text-xs: 0.7rem;
@@ -264,4 +312,10 @@ ul, ol {
 }
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+/* ===== Light Mode: Hero 3D Backdrop Color Fix ===== */
+[data-theme='light'] #hero-slide > div:first-child {
+  filter: invert(1) hue-rotate(180deg) contrast(1.4) brightness(0.55) saturate(1.4) !important;
+  opacity: 0.9 !important;
 }

@@ -34,6 +34,7 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
         setTimeout(() => {
           setPhase('done');
           document.body.style.overflow = '';
+          window.dispatchEvent(new CustomEvent('introComplete'));
           onComplete();
         }, 2000);
       }
@@ -56,62 +57,74 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
       <div className={styles.grain} />
       <span className={styles.kanjiTop}>空落</span>
 
-      <div className={styles.wordContainer}>
-        <svg
-          className={styles.skyfallSvg}
-          viewBox="0 0 900 140"
-          preserveAspectRatio="xMidYMid meet"
-        >
-          <defs>
-            <clipPath id="ink-fill-clip">
-              <rect
-                x="0"
-                y={140 - (progress / 100) * 140}
-                width="900"
-                height={140}
-              />
-            </clipPath>
-            <filter id="ink-edge">
-              <feTurbulence
-                type="fractalNoise"
-                baseFrequency="0.04"
-                numOctaves="4"
-                result="noise"
-              />
-              <feDisplacementMap
-                in="SourceGraphic"
-                in2="noise"
-                scale="2"
-                xChannelSelector="R"
-                yChannelSelector="G"
-              />
-            </filter>
-          </defs>
+      <div className={styles.terminalContainer}>
+        <div className={styles.terminalHeader}>
+          <span className={styles.dot} style={{ background: '#FF5F56' }} />
+          <span className={styles.dot} style={{ background: '#FFBD2E' }} />
+          <span className={styles.dot} style={{ background: '#27C93F' }} />
+          <span className={styles.terminalTitle}>boot_sequence.exe</span>
+        </div>
 
-          <text x="450" y="110" textAnchor="middle" className={styles.outlineText}>
-            SKYFALL
-          </text>
-          <text
-            x="450" y="110" textAnchor="middle"
-            className={styles.filledText}
-            clipPath="url(#ink-fill-clip)"
-            filter="url(#ink-edge)"
-          >
-            SKYFALL
-          </text>
-        </svg>
+        <div className={styles.terminalBody}>
+          <p className={styles.typeWriter}>&gt; SYSTEM BOOT INITIATED...</p>
+          <p className={styles.typeWriter} style={{ animationDelay: '0.5s' }}>&gt; MOUNTING ASSETS...</p>
+          <p className={styles.typeWriter} style={{ animationDelay: '1s' }}>&gt; INITIALIZING PROTOCOL: <span className={styles.accent}>skyfall</span></p>
 
-        <div
-          className={styles.brushLine}
-          style={{ width: `${Math.min(progress * 1.1, 100)}%` }}
-        />
-      </div>
+          <div className={styles.wordContainer}>
+            <svg
+              className={styles.skyfallSvg}
+              viewBox="0 0 260 50"
+              preserveAspectRatio="xMidYMid meet"
+            >
+              <defs>
+                <clipPath id="ink-fill-clip">
+                  <rect
+                    x="0"
+                    y={50 - (progress / 100) * 50}
+                    width="260"
+                    height={50}
+                  />
+                </clipPath>
+                <filter id="ink-edge">
+                  <feTurbulence
+                    type="fractalNoise"
+                    baseFrequency="0.04"
+                    numOctaves="4"
+                    result="noise"
+                  />
+                  <feDisplacementMap
+                    in="SourceGraphic"
+                    in2="noise"
+                    scale="2"
+                    xChannelSelector="R"
+                    yChannelSelector="G"
+                  />
+                </filter>
+              </defs>
 
-      <div className={styles.progressInfo}>
-        <span className={styles.progressNum}>
-          {String(Math.floor(progress)).padStart(3, '0')}
-        </span>
-        <span className={styles.progressLabel}>%</span>
+              <text x="130" y="40" textAnchor="middle" className={styles.outlineText}>
+                skyfall
+              </text>
+              <text
+                x="130" y="40" textAnchor="middle"
+                className={styles.filledText}
+                clipPath="url(#ink-fill-clip)"
+                filter="url(#ink-edge)"
+              >
+                skyfall
+              </text>
+            </svg>
+          </div>
+
+          <div className={styles.progressWrapper}>
+            <div className={styles.progressBar}>
+              <div className={styles.progressFill} style={{ width: `${progress}%` }} />
+            </div>
+            <span className={styles.progressText}>
+              [ {String(Math.floor(progress)).padStart(3, '0')}% ]
+            </span>
+          </div>
+        </div>
       </div>
 
       <p className={styles.tagline}>

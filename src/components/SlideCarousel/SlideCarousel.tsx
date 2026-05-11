@@ -15,12 +15,11 @@ import AboutSlide from '../slides/AboutSlide';
 import CraftSlide from '../slides/CraftSlide';
 import WorksSlide from '../slides/WorksSlide';
 import PhilosophySlide from '../slides/PhilosophySlide';
-import ProjectsSlide from '../slides/ProjectsSlide';
 import ContactSlide from '../slides/ContactSlide';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-const TOTAL_SLIDES = 7;
+const TOTAL_SLIDES = 6;
 
 export default function SlideCarousel() {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -209,6 +208,100 @@ export default function SlideCarousel() {
           });
         });
 
+        // ===== HERO NAME REVEAL — triggered after Skyfall intro completes =====
+        const heroName = track.querySelector('[data-hero-name]');
+        const heroSubtitle = track.querySelector('[data-hero-subtitle]');
+        const heroFadeEls = track.querySelectorAll('[data-hero-fade]');
+        const nameSection = heroName?.parentElement;
+
+        const revealHero = () => {
+          const tl = gsap.timeline();
+
+          // 1. Fade in name section container
+          if (nameSection) {
+            tl.to(nameSection, {
+              opacity: 1,
+              duration: 0.01,
+            });
+          }
+
+          // 2. Name elegantly scales up from slightly small + fades in
+          if (heroName) {
+            tl.fromTo(heroName,
+              { opacity: 0, scale: 0.9, y: 30 },
+              {
+                opacity: 1,
+                scale: 1,
+                y: 0,
+                duration: 2,
+                ease: 'power3.out',
+              },
+              0
+            );
+          }
+
+          // 3. Subtitle slides in after name
+          if (heroSubtitle) {
+            tl.fromTo(heroSubtitle,
+              { opacity: 0, y: 15 },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 1.5,
+                ease: 'power2.out',
+              },
+              0.8
+            );
+          }
+
+          // 4. Bottom whispers fade in last
+          if (heroFadeEls.length > 0) {
+            tl.fromTo(heroFadeEls,
+              { opacity: 0 },
+              {
+                opacity: 1,
+                duration: 2,
+                stagger: 0.3,
+                ease: 'power2.inOut',
+              },
+              1.2
+            );
+
+            // Also reveal the bottom row container
+            const bottomRow = heroFadeEls[0]?.parentElement;
+            if (bottomRow) {
+              tl.to(bottomRow, { opacity: 1, duration: 0.01 }, 1.2);
+            }
+          }
+
+          // 5. After reveal, add calm continuous floating
+          tl.call(() => {
+            if (heroName) {
+              gsap.to(heroName, {
+                y: -8,
+                duration: 4,
+                yoyo: true,
+                repeat: -1,
+                ease: 'sine.inOut',
+              });
+            }
+          });
+        };
+
+        // Listen for intro completion
+        const onIntroComplete = () => {
+          revealHero();
+          window.removeEventListener('introComplete', onIntroComplete);
+        };
+        window.addEventListener('introComplete', onIntroComplete);
+
+        // Fallback: if intro already completed (hot reload), reveal immediately
+        setTimeout(() => {
+          if (nameSection && getComputedStyle(nameSection).opacity === '0') {
+            revealHero();
+          }
+        }, 3000);
+
       });
 
       return () => ctx.revert();
@@ -245,7 +338,7 @@ export default function SlideCarousel() {
 
   return (
     <>
-      <Navbar />
+      <Navbar onNavigate={goToSlide} />
 
       <div ref={wrapperRef} className={styles.wrapper}>
         <div ref={trackRef} className={styles.track}>
@@ -254,7 +347,6 @@ export default function SlideCarousel() {
           <CraftSlide />
           <WorksSlide />
           <PhilosophySlide />
-          <ProjectsSlide />
           <ContactSlide onRewind={handleRewind} />
         </div>
       </div>

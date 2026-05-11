@@ -3,182 +3,122 @@
   width: 100vw;
   height: 100vh;
   min-width: 100vw;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
   overflow: hidden;
   background: var(--color-bg);
 }
 
-/* ===== LEFT: Atmospheric breathing space ===== */
-.atmosphereHalf {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-/* Single thin vertical accent */
-.vertLine {
+/* ===== 3D Cinematic Backdrop ===== */
+.background3D {
   position: absolute;
-  right: 0;
-  top: 15%;
-  bottom: 15%;
-  width: 1px;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    var(--color-charcoal) 30%,
-    var(--color-charcoal) 70%,
-    transparent 100%
-  );
-  opacity: 0.4;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  mask-image: radial-gradient(ellipse 70% 70% at center, black 30%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at center, black 30%, transparent 100%);
+  opacity: 0.6;
+  pointer-events: none;
+  transition: filter 0.8s ease, opacity 0.8s ease;
 }
 
-/* Ghostly kanji — large but barely there */
-.kanjiGhost {
-  font-family: var(--font-display);
-  font-size: clamp(12rem, 20vw, 18rem);
-  font-weight: 900;
-  color: transparent;
-  -webkit-text-stroke: 1px var(--color-charcoal);
-  line-height: 1;
-  opacity: 0.15;
-  user-select: none;
-  animation: ghostFloat 18s ease-in-out infinite;
+/* Light mode: invert the 3D backdrop so it renders as dark ink on paper */
+:global([data-theme='light']) .background3D {
+  filter: invert(1) hue-rotate(180deg) contrast(1.4) brightness(0.6) saturate(1.3);
+  opacity: 0.85;
 }
 
-@keyframes ghostFloat {
-  0%, 100% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-8px) scale(1.005); }
-}
-
-/* Index number — top left corner */
-.indexNum {
+/* ===== Content Overlay ===== */
+.contentOverlay {
   position: absolute;
-  top: calc(var(--navbar-height) + 24px);
-  left: var(--slide-padding);
-  font-family: var(--font-body);
-  font-size: 0.6rem;
-  letter-spacing: 0.2em;
-  color: var(--color-charcoal-light);
-}
-
-/* ===== RIGHT: The calm introduction ===== */
-.introHalf {
-  position: relative;
+  inset: 0;
+  z-index: 5;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 var(--slide-padding);
-  padding-left: clamp(2rem, 5vw, 5rem);
-}
-
-/* Role label — tiny, with a line */
-.roleRow {
-  display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: var(--space-xl);
+  pointer-events: none;
 }
 
-.roleLine {
-  width: 28px;
-  height: 1px;
-  background: var(--color-rust);
-  opacity: 0.6;
+/* ===== Name Section — centered, elegant ===== */
+.nameSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0; /* GSAP reveals this after intro */
 }
 
-.roleText {
-  font-family: var(--font-body);
-  font-size: 0.6rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--color-ash);
-}
-
-/* ===== The name — refined serif, confident but quiet ===== */
-.nameBlock {
-  margin-bottom: var(--space-lg);
+.nameText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  line-height: 1;
 }
 
 .firstName {
-  font-family: var(--font-display);
-  font-size: clamp(3.8rem, 6.5vw, 6.5rem);
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 1;
+  font-family: var(--font-hero);
+  font-size: clamp(4.5rem, 12vw, 12rem);
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: 0.06em;
   color: var(--color-text);
-  margin: 0;
+  text-shadow:
+    0 4px 30px rgba(0, 0, 0, 0.8),
+    0 0 80px rgba(139, 37, 0, 0.15);
 }
 
 .lastName {
-  font-family: var(--font-display);
-  font-size: clamp(1.4rem, 2.2vw, 2rem);
-  font-weight: 300;
-  letter-spacing: 0.35em;
+  font-family: var(--font-hero);
+  font-size: clamp(3.5rem, 9vw, 9rem);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  text-shadow:
+    0 4px 30px rgba(0, 0, 0, 0.8),
+    0 0 80px rgba(139, 37, 0, 0.15);
+  margin-top: -0.15em;
+}
+
+/* ===== Subtitle Row ===== */
+.subtitleRow {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  opacity: 0; /* GSAP reveals */
+}
+
+.dash {
+  width: 40px;
+  height: 1px;
+  background: var(--color-rust);
+}
+
+.subtitle {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--color-ash);
-  margin: 10px 0 0 3px;
 }
 
-/* Brief descriptor */
-.descriptor {
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  line-height: 1.8;
-  color: var(--color-text-secondary);
-  max-width: 280px;
-  margin-bottom: var(--space-xl);
-}
-
-/* Minimal CTA */
-.cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  color: var(--color-text);
-  transition: gap 0.4s var(--ease-out-expo);
-}
-
-.cta:hover {
-  gap: 16px;
-}
-
-.ctaText {
-  font-family: var(--font-accent);
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.ctaArrow {
-  font-size: 0.9rem;
-  transition: transform 0.4s var(--ease-out-expo);
-  color: var(--color-rust);
-}
-
-.cta:hover .ctaArrow {
-  transform: translateX(4px);
-}
-
-/* ===== Bottom edge — whispered info ===== */
-.bottomEdge {
+/* ===== Bottom whispers ===== */
+.bottomRow {
   position: absolute;
-  bottom: 28px;
-  left: var(--slide-padding);
-  right: var(--slide-padding);
+  bottom: 2rem;
+  left: clamp(2rem, 5vw, 5rem);
+  right: clamp(2rem, 5vw, 5rem);
   display: flex;
   justify-content: space-between;
-  z-index: 5;
+  opacity: 0; /* GSAP reveals */
 }
 
-.edgeText {
+.whisper {
   font-family: var(--font-body);
-  font-size: 0.55rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
   color: var(--color-charcoal-light);
 }

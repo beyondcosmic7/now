@@ -13,7 +13,7 @@
    ============================================ */
 .mapHalf {
   position: relative;
-  width: 55%;
+  width: 35%;
   height: 100%;
   overflow: hidden;
 }
@@ -122,143 +122,65 @@
 }
 
 /* ============================================
-   RIGHT HALF — About content
+   MIDDLE HALF — Text content (40%)
    ============================================ */
-.rightContent {
-  position: relative;
-  width: 45%;
+.textHalf {
+  width: 40%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 var(--slide-padding);
-  padding-left: clamp(2rem, 4vw, 4rem);
-  z-index: 4;
+  padding: 0 clamp(3rem, 4vw, 5rem);
+  background: var(--color-bg);
+  z-index: 5;
+  border-right: 1px solid hsla(0, 0%, 100%, 0.05);
 }
 
-/* ── Portrait button — clickable, larger ── */
-.portraitBtn {
-  all: unset;
-  position: relative;
-  cursor: pointer;
-  margin-bottom: var(--space-lg);
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-}
-
-.portraitWrap {
-  position: relative;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 2px solid transparent;
-  transition: border-color 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.4s ease;
-}
-
-.portraitBtn:hover .portraitWrap {
-  border-color: var(--color-rust);
-  transform: scale(1.06);
-  box-shadow: 0 8px 30px hsla(11, 100%, 27%, 0.2);
-}
-
-.portrait {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 15%;
-  filter: grayscale(0.2) contrast(1.05);
-  transition: filter 0.4s ease;
-}
-
-.portraitBtn:hover .portrait {
-  filter: grayscale(0) contrast(1.1);
-}
-
-/* Shine sweep on hover */
-.portraitShine {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: linear-gradient(
-    105deg,
-    transparent 40%,
-    hsla(0, 0%, 100%, 0.15) 50%,
-    transparent 60%
-  );
-  transform: translateX(-100%);
-  transition: transform 0.6s ease;
-  pointer-events: none;
-}
-
-.portraitBtn:hover .portraitShine {
-  transform: translateX(100%);
-}
-
-/* "View Profile" hint */
-.portraitHint {
-  font-family: var(--font-body);
-  font-size: 0.55rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--color-charcoal-light);
-  opacity: 0;
-  transform: translateY(-4px);
-  transition: all 0.3s ease 0.1s;
-}
-
-.portraitBtn:hover .portraitHint {
-  opacity: 1;
-  transform: translateY(0);
-  color: var(--color-rust);
-}
-
-/* ── Text content ── */
 .sectionLabel {
   font-family: var(--font-accent);
   font-size: var(--text-xs);
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-md);
   display: flex;
   align-items: center;
   gap: var(--space-sm);
+  color: var(--color-rust);
 }
 
 .labelLine {
-  width: 25px;
-  height: 1.5px;
+  width: 30px;
+  height: 1px;
   background: var(--color-rust);
 }
 
 .heading {
   font-family: var(--font-display);
-  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  font-size: clamp(2rem, 3vw, 3.5rem);
   font-weight: 700;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   margin-bottom: var(--space-md);
   line-height: 1.15;
+  color: var(--color-white);
 }
 
 .bodyText {
   font-family: var(--font-body);
-  font-size: var(--text-sm);
+  font-size: 1rem;
   line-height: 1.7;
   color: var(--color-text-secondary);
-  max-width: 380px;
-  margin-bottom: var(--space-lg);
+  max-width: 450px;
+  margin-bottom: var(--space-xl);
 }
 
 .techGrid {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: var(--space-lg);
-  max-width: 360px;
+  margin-bottom: var(--space-xl);
+  max-width: 450px;
 }
 
 .techItem {
@@ -267,7 +189,7 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-ash);
-  padding: 5px 12px;
+  padding: 6px 14px;
   border: 1px solid var(--color-charcoal-light);
   transition: all 0.3s ease;
   cursor: default;
@@ -276,23 +198,23 @@
 .techItem:hover {
   border-color: var(--color-rust);
   color: var(--color-rust);
-  transform: translateY(-2px);
+  background: hsla(11, 100%, 27%, 0.05);
 }
 
 .statRow {
   display: flex;
-  gap: var(--space-xl);
+  gap: 3.5rem;
 }
 
 .stat {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 .statNum {
   font-family: var(--font-display);
-  font-size: 1.8rem;
+  font-size: 2.2rem;
   font-weight: 700;
   color: var(--color-text);
   line-height: 1;
@@ -303,7 +225,71 @@
   font-size: 0.6rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--color-ash);
+  color: var(--color-rust);
+}
+
+/* ============================================
+   RIGHT HALF — Full bleed image (25%)
+   ============================================ */
+.imageHalf {
+  width: 25%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.fullPortrait {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  filter: grayscale(0.4) contrast(1.1);
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), filter 0.8s ease;
+}
+
+.imageHalf:hover .fullPortrait {
+  transform: scale(1.05);
+  filter: grayscale(0) contrast(1.15);
+}
+
+.profileBtnOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: hsla(0, 0%, 0%, 0.5);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  all: unset;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.imageHalf:hover .profileBtnOverlay {
+  opacity: 1;
+}
+
+.overlayText {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-white);
+  border: 1px solid hsla(0, 0%, 100%, 0.3);
+  padding: 1rem 2rem;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(20px);
+}
+
+.imageHalf:hover .overlayText {
+  transform: translateY(0);
 }
 
 /* ============================================

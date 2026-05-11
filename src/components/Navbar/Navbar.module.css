@@ -18,31 +18,32 @@
 }
 
 .logo {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
   user-select: none;
-  color: var(--color-text);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease;
+  padding: 4px 0;
+  /* Margins or alignment nudge to perfectly align in the navbar */
+  margin-top: 2px;
 }
 
-.logoKey {
-  font-size: 1.6rem;
-  line-height: 1;
-  color: var(--color-rust);
+.logo:hover {
+  transform: scale(1.08) rotate(-2deg);
+  filter: brightness(1.1);
 }
 
-.logoName {
-  font-family: var(--font-accent);
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+/* Invert the white logo to dark ink in light mode */
+:global([data-theme='light']) .logo img {
+  filter: invert(1);
+  transition: filter 0.5s ease;
 }
+
+:global([data-theme='light']) .logo:hover img {
+  filter: invert(1) brightness(0.8);
+}
+
 
 .navLinks {
   display: flex;
