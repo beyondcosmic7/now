@@ -249,24 +249,24 @@ export default function DepthPoints() {
       const elapsed = Date.now() - startTime;
       material.uniforms.u_time.value = elapsed;
 
-      // Smooth mouse follow — luxury inertia
-      mouse.x.current = lerp(mouse.x.current, mouse.x.target, 0.03);
-      mouse.y.current = lerp(mouse.y.current, mouse.y.target, 0.03);
+      // Smooth mouse follow — ultra-luxury inertia
+      mouse.x.current = lerp(mouse.x.current, mouse.x.target, 0.02);
+      mouse.y.current = lerp(mouse.y.current, mouse.y.target, 0.02);
 
-      // Idle rotation — slow, clockwork-like
-      const idleX = Math.sin(elapsed * 0.00025) * 0.06;
-      const idleY = Math.cos(elapsed * 0.0002) * 0.08;
+      // Idle rotation — glacially slow, clockwork-like
+      const idleX = Math.sin(elapsed * 0.00018) * 0.05;
+      const idleY = Math.cos(elapsed * 0.00015) * 0.06;
 
       // Combined rotation — mouse + idle
-      const rotX = (mouse.y.current * 0.8 + idleY) * Math.PI * -0.05;
-      const rotY = (mouse.x.current * 0.8 + idleX) * Math.PI * -0.06;
+      const rotX = (mouse.y.current * 0.7 + idleY) * Math.PI * -0.04;
+      const rotY = (mouse.x.current * 0.7 + idleX) * Math.PI * -0.05;
 
       points.rotation.x = rotX;
       points.rotation.y = rotY;
 
       // Subtle parallax shift
-      points.position.x = (mouse.x.current + idleX) * planeW * -0.015;
-      points.position.y = (mouse.y.current + idleY) * planeH * 0.015;
+      points.position.x = (mouse.x.current + idleX) * planeW * -0.012;
+      points.position.y = (mouse.y.current + idleY) * planeH * 0.012;
 
       renderer.render(scene, camera);
     };

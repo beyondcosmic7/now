@@ -1,0 +1,3 @@
+okay, now we will make the app more reponsive, 
+first create a button in menu, the func of that button is to change the scroll dynamics, from horizontal to vertical. chnage and mak ethe animations more elegant beautiful and calm. in mobile devices where the screen size is not big like in phone where horizontal is not possible until is it is landscape, there imply only vertical scroll only. mak ethe app highly repsonsive and beautiful maintaining its vibe and aesthetics. 
+make it beautiful 

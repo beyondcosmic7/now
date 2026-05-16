@@ -21,6 +21,20 @@
   z-index: 1;
 }
 
+/* Japanese accent Kanji — 結 (musubi / connection) */
+.kanjiAccent {
+  position: absolute;
+  top: 10%;
+  right: 8%;
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 10vw, 8rem);
+  color: var(--color-rust);
+  opacity: 0.1;
+  writing-mode: vertical-rl;
+  pointer-events: none;
+  z-index: 0;
+}
+
 .mainContent {
   flex: 1;
   display: flex;
@@ -42,6 +56,7 @@
   display: flex;
   gap: 4rem;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .magneticLink {
@@ -116,19 +131,19 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 10; /* Brought above the container */
+  z-index: 10;
   overflow: hidden;
 }
 
 .socialIcon {
   position: absolute;
-  width: 140px; /* Massive scale */
+  width: 140px;
   height: 140px;
-  display: block; /* Important for a tag */
-  opacity: 0.08; /* Very subtle, cinematic */
+  display: block;
+  opacity: 0.08;
   filter: blur(4px) drop-shadow(0 15px 30px rgba(0,0,0,0.8));
   transition: opacity 0.8s ease, filter 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
-  pointer-events: auto; /* Allow hovering */
+  pointer-events: auto;
   cursor: pointer;
 }
 
@@ -151,7 +166,7 @@
 }
 
 :global([data-theme='light']) .socialIcon {
-  opacity: 0.12; /* slightly more visible dark ghost */
+  opacity: 0.12;
   filter: blur(4px) drop-shadow(0 15px 30px rgba(0,0,0,0.1));
 }
 
@@ -160,7 +175,6 @@
   filter: blur(0px) drop-shadow(0 0 40px hsla(11, 100%, 50%, 0.4));
 }
 
-/* Positioned to fill the background beautifully */
 .social1 { top: 10%; left: 15%; animation: floatA 15s ease-in-out infinite; }
 .social2 { bottom: 20%; right: 10%; animation: floatB 18s ease-in-out infinite 2s; }
 .social3 { top: 40%; left: 65%; animation: floatC 14s ease-in-out infinite 1s; }
@@ -182,4 +196,94 @@
 @keyframes floatD {
   0%, 100% { transform: translate(0, 0) rotate(0deg); }
   50% { transform: translate(50px, -30px) rotate(-3deg); }
+}
+
+/* ===== Vertical Mode ===== */
+:global([data-layout='vertical']) .slide {
+  min-width: unset;
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+}
+
+/* ===== Tablet (≤1024px) ===== */
+@media (max-width: 1024px) {
+  .slide {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .massiveTitle {
+    font-size: clamp(3.5rem, 10vw, 8rem);
+  }
+
+  .linksRow {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .socialIcon {
+    width: 90px;
+    height: 90px;
+  }
+
+  .kanjiAccent {
+    font-size: clamp(3rem, 8vw, 6rem);
+  }
+}
+
+/* ===== Mobile (≤768px) ===== */
+@media (max-width: 768px) {
+  .container {
+    padding: 1.5rem;
+    padding-top: calc(var(--navbar-height) + 1.5rem);
+  }
+
+  .massiveTitle {
+    font-size: clamp(2.5rem, 14vw, 5rem);
+    margin-bottom: 2rem;
+  }
+
+  .magneticLink {
+    font-size: 1rem;
+  }
+
+  .footerRow {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .socialIcon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .kanjiAccent {
+    font-size: clamp(2rem, 6vw, 4rem);
+    opacity: 0.08;
+    top: 10%;
+    right: 3%;
+  }
+}
+
+/* ===== Small Mobile (≤480px) ===== */
+@media (max-width: 480px) {
+  .massiveTitle {
+    font-size: clamp(2rem, 16vw, 3.5rem);
+  }
+
+  .linksRow {
+    gap: 1rem;
+  }
+
+  .magneticLink {
+    font-size: 0.9rem;
+  }
+
+  .socialIcon {
+    width: 45px;
+    height: 45px;
+  }
 }

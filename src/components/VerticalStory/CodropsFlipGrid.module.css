@@ -1,0 +1,166 @@
+.section {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #0a0a09;
+  border-bottom: 1px solid hsla(45, 10%, 90%, 0.03);
+  z-index: 50;
+  padding: 4rem 0;
+}
+
+/* ── Common Grid Wrap ── */
+.gridWrap {
+  display: grid;
+  position: relative;
+  z-index: 10;
+  margin: 0 auto;
+}
+
+/* ── Expanded Grid State ── */
+.gridExpanded {
+  width: 100%;
+  height: 100vh;
+  grid-gap: 2rem;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: 1fr 20vh 1fr;
+  padding: 0 4rem;
+}
+
+/* Set specific spanning and heights for the expanded items (organic look) */
+.gridExpanded .gridItem:nth-child(1) { height: 55%; align-self: end; }
+.gridExpanded .gridItem:nth-child(2) { height: 95%; align-self: end; }
+.gridExpanded .gridItem:nth-child(3) { height: 65%; align-self: end; }
+.gridExpanded .gridItem:nth-child(4) { height: 70%; align-self: end; }
+.gridExpanded .gridItem:nth-child(5) { height: 100%; align-self: end; }
+.gridExpanded .gridItem:nth-child(6) { height: 35%; align-self: end; }
+.gridExpanded .gridItem:nth-child(7) { height: 65%; align-self: end; }
+
+/* ── Grid Items ── */
+.gridItem {
+  display: block;
+  width: 100%;
+  will-change: transform;
+  overflow: hidden;
+  position: relative;
+  background-color: #111110;
+  cursor: pointer;
+  opacity: 0; /* Animated in via GSAP */
+  transform: translateY(100px); /* Changed to 100px for entrance */
+}
+
+.gridItemImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: 50% 50%;
+  pointer-events: none;
+  filter: grayscale(0.8) sepia(0.1);
+  transition: filter 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.gridItem:hover .gridItemImg {
+  filter: grayscale(0.2) sepia(0);
+}
+
+/* Hover Titles in Expanded Mode */
+.gridExpanded .gridItem::after {
+  content: attr(data-title);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  color: #e6e4df;
+  font-family: var(--font-accent);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  padding: 1rem;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: all 0.5s ease;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+}
+
+.gridExpanded .gridItem:hover::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ── Expanded Content (Huge Background Title) ── */
+.worksTitle {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 15vw;
+  color: rgba(230, 228, 223, 0.05); /* Very subtle watermark */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2vw;
+  margin: 0;
+}
+
+.worksTitleWordWrapper {
+  overflow: hidden;
+  line-height: 0.8;
+}
+
+.worksTitleWord {
+  display: inline-block;
+  will-change: transform;
+}
+
+.worksTitleWordWrapper:last-child {
+  align-self: flex-end;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .section {
+    padding: 8rem 2rem;
+    height: auto;
+  }
+  .gridExpanded {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    height: auto;
+    padding: 0;
+    grid-gap: 1.5rem;
+  }
+  .gridExpanded .gridItem {
+    height: 300px !important;
+    align-self: center !important;
+  }
+  .worksTitle { font-size: 20vw; justify-content: center; gap: 4rem; }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 6rem 1rem;
+  }
+  .gridExpanded {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1rem;
+  }
+  .gridExpanded .gridItem {
+    height: 250px !important;
+  }
+  .worksTitle { font-size: 24vw; }
+}
+
+@media (max-width: 480px) {
+  .gridExpanded {
+    grid-template-columns: 1fr;
+    grid-gap: 1.5rem;
+  }
+  .gridExpanded .gridItem {
+    height: 300px !important;
+  }
+}

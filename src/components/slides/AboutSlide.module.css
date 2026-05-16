@@ -466,3 +466,144 @@
   border-color: var(--color-rust);
   color: var(--color-rust);
 }
+
+/* ===== Vertical Mode ===== */
+:global([data-layout='vertical']) .slide {
+  min-width: unset;
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+}
+
+/* ===== Tablet (≤1024px) — Vertical story layout ===== */
+@media (max-width: 1024px) {
+  .slide {
+    flex-direction: column;
+    height: auto;
+    min-height: auto;
+  }
+
+  /* Portrait image becomes a cinematic hero banner at top */
+  .imageHalf {
+    width: 100%;
+    height: 45vh;
+    order: -1;
+  }
+
+  /* Map becomes a full-width atmospheric strip */
+  .mapHalf {
+    width: 100%;
+    height: 40vh;
+  }
+
+  /* Text takes full width */
+  .textHalf {
+    width: 100%;
+    height: auto;
+    padding: clamp(2rem, 5vw, 4rem);
+    border-right: none;
+  }
+
+  .heading {
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+  }
+
+  .bodyText {
+    max-width: 100%;
+  }
+
+  .techGrid {
+    max-width: 100%;
+  }
+
+  .statRow {
+    gap: 2.5rem;
+  }
+
+  /* Modal stacks */
+  .modalGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .modalPhoto {
+    height: 220px;
+  }
+
+  .modalContent {
+    padding: 28px 24px;
+  }
+}
+
+/* ===== Mobile (≤768px) ===== */
+@media (max-width: 768px) {
+  .imageHalf {
+    height: 35vh;
+  }
+
+  .mapHalf {
+    height: 30vh;
+  }
+
+  .textHalf {
+    padding: 1.5rem;
+  }
+
+  .heading {
+    font-size: clamp(1.4rem, 6vw, 2rem);
+  }
+
+  .bodyText {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .statRow {
+    gap: 2rem;
+  }
+
+  .statNum {
+    font-size: 1.8rem;
+  }
+
+  .mapCity {
+    font-size: clamp(1.8rem, 6vw, 2.5rem);
+  }
+
+  .mapOverlay {
+    padding: 20px 24px;
+  }
+
+  .modal {
+    width: 95vw;
+    max-height: 90vh;
+  }
+
+  .modalContent {
+    padding: 20px 16px;
+  }
+
+  .modalName {
+    font-size: 1.4rem;
+  }
+}
+
+/* ===== Small Mobile (≤480px) ===== */
+@media (max-width: 480px) {
+  .imageHalf {
+    height: 28vh;
+  }
+
+  .mapHalf {
+    height: 25vh;
+  }
+
+  .statRow {
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .techItem {
+    font-size: 0.55rem;
+    padding: 4px 10px;
+  }
+}

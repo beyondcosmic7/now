@@ -176,7 +176,7 @@
 .floatingEcosystem {
   position: absolute;
   inset: 0;
-  pointer-events: none; /* Let clicks pass through to the card */
+  pointer-events: none;
   z-index: 6;
 }
 
@@ -190,7 +190,6 @@
   transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
-/* Medium Spacing - beautifully distributed AROUND the center glass card */
 .node1 { top: 5%; left: 8%; animation: floatA 8s ease-in-out infinite; }
 .node2 { top: 12%; right: 2%; animation: floatB 10s ease-in-out infinite 1s; }
 .node3 { top: 45%; left: -6%; animation: floatC 9s ease-in-out infinite 2s; }
@@ -199,7 +198,6 @@
 .node6 { bottom: -2%; right: 22%; animation: floatB 9s ease-in-out infinite 1.5s; }
 .node7 { top: 82%; left: 45%; animation: floatC 10s ease-in-out infinite 4s; }
 
-/* Distinct, calm, non-chaotic floating animations */
 @keyframes floatA {
   0%, 100% { transform: translate(0, 0) rotate(0deg); }
   50% { transform: translate(-15px, -20px) rotate(2deg); }
@@ -215,4 +213,112 @@
 @keyframes floatD {
   0%, 100% { transform: translate(0, 0) rotate(0deg); }
   50% { transform: translate(25px, -15px) rotate(-1deg); }
+}
+
+/* ===== Vertical Mode ===== */
+:global([data-layout='vertical']) .slide {
+  min-width: unset;
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+}
+
+/* ===== Tablet (≤1024px) ===== */
+@media (max-width: 1024px) {
+  .slide {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .layoutGrid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    padding: 2rem;
+    padding-top: calc(var(--navbar-height) + 2rem);
+  }
+
+  .massiveTitle {
+    font-size: clamp(3rem, 10vw, 5rem);
+    margin-bottom: 2rem;
+  }
+
+  .textBlock {
+    max-width: 100%;
+  }
+
+  .glassCard {
+    max-width: 100%;
+    transform: rotate(0deg);
+  }
+
+  .techLogo {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+/* ===== Mobile (≤768px) ===== */
+@media (max-width: 768px) {
+  .layoutGrid {
+    padding: 1.5rem;
+    padding-top: calc(var(--navbar-height) + 1.5rem);
+    gap: 2rem;
+  }
+
+  .massiveTitle {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+    margin-bottom: 1.5rem;
+  }
+
+  .textHeading {
+    font-size: 1rem;
+  }
+
+  .textBody {
+    font-size: 0.8rem;
+  }
+
+  .cardContent {
+    padding: 20px;
+  }
+
+  .codeBlock {
+    font-size: 0.65rem;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  .cardFooter {
+    padding: 12px 20px;
+  }
+
+  .footerTags {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .techLogo {
+    width: 28px;
+    height: 28px;
+    opacity: 0.6;
+  }
+
+  .node3, .node4 {
+    display: none;
+  }
+}
+
+/* ===== Small Mobile (≤480px) ===== */
+@media (max-width: 480px) {
+  .massiveTitle {
+    font-size: clamp(2rem, 14vw, 3rem);
+  }
+
+  .labelWrapper {
+    margin-bottom: 1rem;
+  }
+
+  .node5, .node6, .node7 {
+    display: none;
+  }
 }

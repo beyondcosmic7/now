@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 };
 
 import { ThemeProvider } from "@/components/ThemeProvider/ThemeProvider";
+import { LayoutProvider } from "@/context/LayoutContext";
 
 export default function RootLayout({
   children,
@@ -32,9 +33,12 @@ export default function RootLayout({
           defaultTheme="dark"
           enableSystem={false}
         >
-          {children}
+          <LayoutProvider>
+            {children}
+          </LayoutProvider>
         </ThemeProvider>
       </body>
     </html>
   );
 }
+

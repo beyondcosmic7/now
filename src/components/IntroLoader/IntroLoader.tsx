@@ -29,14 +29,14 @@ export default function IntroLoader({ onComplete }: IntroLoaderProps) {
 
       if (current >= 100) {
         clearInterval(interval);
-        setTimeout(() => setPhase('filled'), 200);
-        setTimeout(() => setPhase('exiting'), 800);
+        setTimeout(() => setPhase('filled'), 300);
+        setTimeout(() => setPhase('exiting'), 1000);
         setTimeout(() => {
           setPhase('done');
           document.body.style.overflow = '';
           window.dispatchEvent(new CustomEvent('introComplete'));
           onComplete();
-        }, 2000);
+        }, 2400);
       }
     }, 40);
 

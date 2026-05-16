@@ -1,0 +1,140 @@
+.section {
+  position: relative;
+  padding: clamp(8rem, 20vh, 16rem) clamp(2rem, 10vw, 12rem);
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid hsla(45, 10%, 90%, 0.03);
+}
+
+.sectionHeader {
+  margin-bottom: 8rem;
+  max-width: 600px;
+  margin-left: clamp(2rem, 15vw, 15rem);
+  position: relative;
+  z-index: 5;
+}
+
+.kanjiAccent {
+  position: absolute;
+  top: -40%;
+  right: -20%;
+  font-family: var(--font-display);
+  font-size: clamp(8rem, 25vw, 20rem);
+  color: #8c2a1c;
+  opacity: 0.03;
+  writing-mode: vertical-rl;
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+}
+
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 8vw, 5.5rem);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #e6e4df;
+  margin: 0 0 2rem 0;
+}
+
+.sectionBody {
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+  line-height: 2;
+  color: rgba(230, 228, 223, 0.7);
+  max-width: 480px;
+  font-weight: 300;
+}
+
+/* ── Codrops Columns Layout ── */
+
+.columns {
+  --grid-item-translate: 30px;
+  --grid-item-ratio: 0.75;
+  --grid-item-radius: 2px;
+  --grid-gap: 2vw;
+  --grid-columns: 3;
+  --grid-width: 100%;
+  --grid-max-width: 1400px;
+
+  width: var(--grid-width);
+  max-width: var(--grid-max-width);
+  margin: 0 auto;
+  position: relative;
+  padding: 10vh 0;
+  display: grid;
+  place-items: center;
+  grid-template-columns: repeat(var(--grid-columns), 1fr);
+  gap: var(--grid-gap);
+}
+
+.column {
+  width: 100%;
+  position: relative;
+  display: grid;
+  gap: var(--grid-gap);
+  grid-template-columns: 100%;
+  will-change: transform;
+}
+
+/* Stagger column heights for a more organic feel */
+.column:nth-child(2) {
+  margin-top: -15vh;
+}
+
+.columnItem {
+  margin: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.columnItemImgWrap {
+  width: 100%;
+  aspect-ratio: var(--grid-item-ratio);
+  height: auto;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--grid-item-radius);
+  border: 1px solid rgba(230, 228, 223, 0.05);
+}
+
+.columnItemImg {
+  position: absolute;
+  top: calc(-1 * var(--grid-item-translate));
+  left: calc(-1 * var(--grid-item-translate));
+  height: calc(100% + var(--grid-item-translate) * 2);
+  width: calc(100% + var(--grid-item-translate) * 2);
+  background-size: cover;
+  background-position: 50% 50%;
+  backface-visibility: hidden;
+  will-change: transform;
+  
+  /* Wabi Sabi Image Treatment */
+  filter: grayscale(0.8) contrast(1.1) sepia(0.1);
+  transition: filter 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.columnItemImgWrap:hover .columnItemImg {
+  filter: grayscale(0) contrast(1.05) sepia(0);
+}
+
+@media (max-width: 1024px) {
+  .sectionHeader { margin-left: 0; }
+  .columns {
+    --grid-columns: 2;
+    --grid-gap: 4vw;
+  }
+  .column:nth-child(3) { display: none; } /* Hide 3rd column on tablet */
+}
+
+@media (max-width: 768px) {
+  .section { padding: 8rem 1.5rem; }
+  .columns {
+    --grid-columns: 1;
+    --grid-gap: 8vw;
+    padding: 0;
+  }
+  .column:nth-child(2) { margin-top: 0; }
+}

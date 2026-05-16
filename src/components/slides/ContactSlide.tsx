@@ -30,7 +30,9 @@ export default function ContactSlide({ onRewind }: ContactSlideProps) {
       </div>
 
       <div className={styles.container}>
-        
+        {/* Japanese accent Kanji */}
+        <span className={styles.kanjiAccent} data-stagger>結</span>
+
         <div className={styles.mainContent}>
           <h2 className={styles.massiveTitle} data-stagger data-speed="fast">
             LET&apos;S<br />TALK.
@@ -46,6 +48,9 @@ export default function ContactSlide({ onRewind }: ContactSlideProps) {
             <a href="https://www.instagram.com/__akshann/" target="_blank" rel="noreferrer" className={styles.magneticLink}>
               Instagram
             </a>
+            <a href="https://x.com/acrosscosmic" target="_blank" rel="noreferrer" className={styles.magneticLink}>
+              X
+            </a>
           </div>
         </div>
 
@@ -57,7 +62,6 @@ export default function ContactSlide({ onRewind }: ContactSlideProps) {
             <span>BACK TO START</span>
           </button>
         </div>
-
       </div>
     </section>
   );

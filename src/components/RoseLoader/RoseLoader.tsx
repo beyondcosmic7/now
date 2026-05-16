@@ -97,7 +97,6 @@ export default function RoseLoader() {
 
     return () => {
       cancelAnimationFrame(rafRef.current);
-      particles.forEach((p) => p.remove());
     };
   }, []);
 

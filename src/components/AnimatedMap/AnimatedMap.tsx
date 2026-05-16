@@ -3,6 +3,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useLayout } from '@/context/LayoutContext';
 import styles from './AnimatedMap.module.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -37,12 +38,20 @@ const LAYER_SEQUENCE = [
 
 interface AnimatedMapProps {
   containerAnimation?: gsap.core.Tween | null;
+  onLoaded?: () => void;
 }
 
-export default function AnimatedMap({ containerAnimation }: AnimatedMapProps) {
+export default function AnimatedMap({ containerAnimation, onLoaded }: AnimatedMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [loaded, setLoaded] = useState(false);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
+  const { layout } = useLayout();
+
+  // Store the latest onLoaded callback in a ref to avoid dependency array issues
+  const onLoadedRef = useRef(onLoaded);
+  useEffect(() => {
+    onLoadedRef.current = onLoaded;
+  }, [onLoaded]);
 
   // Load SVG
   useEffect(() => {
@@ -61,7 +70,6 @@ export default function AnimatedMap({ containerAnimation }: AnimatedMapProps) {
         svgEl.style.height = '100%';
         svgEl.style.position = 'absolute';
         svgEl.style.inset = '0';
-        svgEl.style.inset = '0';
 
         // Set all layers to invisible initially
         LAYER_SEQUENCE.forEach(({ id }) => {
@@ -77,28 +85,41 @@ export default function AnimatedMap({ containerAnimation }: AnimatedMapProps) {
         });
 
         setLoaded(true);
+        if (onLoadedRef.current) onLoadedRef.current();
       })
       .catch((err) => console.error('Map failed:', err));
   }, []);
 
-  // Create scroll-driven animation when SVG + containerAnimation are ready
+  // Create scroll-driven animation — works in both horizontal and vertical modes
   useEffect(() => {
     const container = containerRef.current;
-    if (!container || !loaded || !containerAnimation) return;
+    if (!container || !loaded) return;
+
+    // In horizontal mode, we need the containerAnimation
+    // In vertical mode, we animate directly off scroll
+    const isHorizontal = layout === 'horizontal';
+    if (isHorizontal && !containerAnimation) return;
 
     if (tlRef.current) {
       tlRef.current.kill();
     }
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: container,
-        containerAnimation: containerAnimation,
-        start: 'left 130%',
-        end: 'left 50%',
-        scrub: true,
-      }
-    });
+    const triggerConfig: ScrollTrigger.Vars = {
+      trigger: container,
+      scrub: true,
+    };
+
+    if (isHorizontal && containerAnimation) {
+      triggerConfig.containerAnimation = containerAnimation;
+      triggerConfig.start = 'left 130%';
+      triggerConfig.end = 'left 50%';
+    } else {
+      // Vertical mode — animate as the map scrolls into view
+      triggerConfig.start = 'top 100%';
+      triggerConfig.end = 'top 20%';
+    }
+
+    const tl = gsap.timeline({ scrollTrigger: triggerConfig });
 
     LAYER_SEQUENCE.forEach(({ id, start, end }) => {
       const layer = container.querySelector(`#${id}`);
@@ -122,7 +143,7 @@ export default function AnimatedMap({ containerAnimation }: AnimatedMapProps) {
     return () => {
       tl.kill();
     };
-  }, [loaded, containerAnimation]);
+  }, [loaded, containerAnimation, layout]);
 
   return (
     <div

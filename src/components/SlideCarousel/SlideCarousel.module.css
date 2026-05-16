@@ -1,8 +1,11 @@
+/* ===== Horizontal Mode (default) ===== */
 .wrapper {
   position: relative;
   width: 100%;
   height: 100vh;
   overflow: hidden;
+  z-index: 2; /* Needs to sit above sticky footer */
+  background: var(--color-bg);
 }
 
 .track {
@@ -10,9 +13,55 @@
   height: 100%;
   width: fit-content;
   will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
-/* Individual slides within the track can bleed into each other */
 .track > * {
   flex-shrink: 0;
+}
+
+/* ===== Vertical Mode (Legacy/Fallback) ===== */
+.wrapper.vertical {
+  height: auto;
+  overflow: visible;
+}
+
+.track.vertical {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+}
+
+/* ===== Sticky Footer — reveals from behind content =====
+   StringTune "footer-shifting" pattern
+*/
+.stickyFooter {
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.footerDarkOverlay {
+  position: absolute;
+  inset: 0;
+  background: var(--color-bg);
+  opacity: calc(1 - var(--footer-progress, 0));
+  z-index: 2;
+  pointer-events: none;
+  transition: opacity 0.05s linear; /* Ultra-smooth continuous update */
+}
+
+.footerInner {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  transform: translate3d(0, calc(-20% + 20% * var(--footer-progress, 0)), 0);
+  will-change: transform;
 }

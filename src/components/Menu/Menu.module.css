@@ -5,8 +5,8 @@
   pointer-events: none;
   visibility: hidden;
   opacity: 0;
-  /* Delay visibility: hidden until the 0.8s animation finishes */
-  transition: visibility 0s 0.8s, opacity 0.6s ease;
+  /* Delay visibility: hidden until the animation finishes */
+  transition: visibility 0s 1s, opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .open {
@@ -14,7 +14,7 @@
   visibility: visible;
   opacity: 1;
   /* Reset visibility delay when opening */
-  transition: visibility 0s 0s, opacity 0.6s ease;
+  transition: visibility 0s 0s, opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* SVG path wipe background */
@@ -29,7 +29,7 @@
 .overlayPath {
   fill: var(--color-bg);
   /* Use a slightly different easing for a more organic 'closing' feel */
-  transition: d 0.8s cubic-bezier(0.76, 0, 0.24, 1), fill 0.5s ease;
+  transition: d 1s cubic-bezier(0.16, 1, 0.3, 1), fill 0.6s ease;
 }
 
 /* Menu content */
@@ -68,15 +68,15 @@
   opacity: 0;
   transform: translateY(30px);
   /* Slower transition when opening (staggered), faster when closing */
-  transition: opacity 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
-              transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .open .navItem {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1),
-              transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .navItemSub {
@@ -95,7 +95,7 @@
   font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 1;
-  transition: color 0.3s ease, transform 0.3s ease;
+  transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .navItem:hover .navItemText {
@@ -187,15 +187,18 @@
   transition: opacity 0.6s ease 0.4s, transform 0.6s ease 0.4s;
 }
 
-/* --- Theme Toggle Styles --- */
-.themeToggleBlock {
+/* --- Toggles Block (Theme + Layout) --- */
+.togglesBlock {
   margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-.open .themeToggleBlock {
+.open .togglesBlock {
   opacity: 1;
   transform: translateY(0);
   transition: opacity 0.6s ease, transform 0.6s ease;
@@ -226,6 +229,10 @@
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
+.layoutToggle:hover {
+  border-color: var(--color-ash);
+}
+
 .themeToggleIndicator {
   width: 40px;
   height: 40px;
@@ -244,6 +251,10 @@
   transform: rotate(15deg);
 }
 
+.layoutToggle:hover .themeToggleIndicator {
+  background: var(--color-ash);
+}
+
 .themeToggleIcon {
   font-family: var(--font-intro);
   font-size: 1.1rem;
@@ -259,3 +270,54 @@
   color: var(--color-text);
   transition: color 0.5s ease;
 }
+
+/* ===== Mobile Responsive Menu ===== */
+@media (max-width: 1024px) {
+  .content {
+    flex-direction: column;
+    padding: calc(var(--navbar-height) + 1.5rem) 2rem 2rem;
+    gap: 2rem;
+    overflow-y: auto;
+  }
+
+  .nav {
+    gap: var(--space-md);
+  }
+
+  .navItemText {
+    font-size: clamp(2rem, 8vw, 3.5rem);
+  }
+
+  .info {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: flex-start;
+  }
+
+  .kanjiAccent {
+    display: none;
+  }
+
+  .togglesBlock {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navItemText {
+    font-size: 2rem;
+  }
+
+  .content {
+    padding: calc(var(--navbar-height) + 1rem) 1.5rem 1.5rem;
+  }
+
+  .togglesBlock {
+    flex-direction: column;
+  }
+}
+

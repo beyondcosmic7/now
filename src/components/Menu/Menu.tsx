@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
+import { useLayout } from '@/context/LayoutContext';
 import styles from './Menu.module.css';
 
 function ThemeToggle() {
@@ -31,6 +32,37 @@ function ThemeToggle() {
       </div>
       <span className={styles.themeToggleText}>
         {isDark ? 'Sumi (Dark)' : 'Washi (Light)'}
+      </span>
+    </button>
+  );
+}
+
+function LayoutToggle() {
+  const { layout, setLayout, isMobile } = useLayout();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Don't show on mobile — vertical is forced
+  if (!mounted || isMobile) return null;
+
+  const isHorizontal = layout === 'horizontal';
+
+  return (
+    <button
+      className={`${styles.themeToggle} ${styles.layoutToggle}`}
+      onClick={() => setLayout(isHorizontal ? 'vertical' : 'horizontal')}
+      aria-label="Toggle Scroll Direction"
+    >
+      <div className={styles.themeToggleIndicator}>
+        <span className={styles.themeToggleIcon}>
+          {isHorizontal ? '横' : '縦'}
+        </span>
+      </div>
+      <span className={styles.themeToggleText}>
+        {isHorizontal ? 'Yoko (Horizontal)' : 'Tate (Vertical)'}
       </span>
     </button>
   );
@@ -133,10 +165,11 @@ export default function Menu({ isOpen, onClose, onNavigate }: MenuProps) {
           </div>
 
           <div
-            className={styles.themeToggleBlock}
+            className={styles.togglesBlock}
             style={{ transitionDelay: isOpen ? '0.8s' : '0s' }}
           >
             <ThemeToggle />
+            <LayoutToggle />
           </div>
 
           {/* Japanese accent */}
