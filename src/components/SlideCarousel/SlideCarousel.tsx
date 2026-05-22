@@ -80,7 +80,7 @@ export default function SlideCarousel() {
             ...(isH ? { containerAnimation } : {}),
             start: isH ? 'left 90%' : 'top 90%',
             end: isH ? 'left 45%' : 'top 50%',
-            scrub: 2,
+            scrub: 1,
           },
         }
       );
@@ -100,7 +100,7 @@ export default function SlideCarousel() {
             ...(isH ? { containerAnimation } : {}),
             start: isH ? 'left 80%' : 'top 85%',
             end: isH ? 'left 35%' : 'top 45%',
-            scrub: 2,
+            scrub: 1,
           },
         }
       );
@@ -120,7 +120,7 @@ export default function SlideCarousel() {
             ...(isH ? { containerAnimation } : {}),
             start: isH ? 'left 75%' : 'top 85%',
             end: isH ? 'left 40%' : 'top 50%',
-            scrub: 2,
+            scrub: 1,
           },
         }
       );
@@ -154,8 +154,8 @@ export default function SlideCarousel() {
 
       if (heroName) {
         tl.fromTo(heroName,
-          { opacity: 0, scale: 0.92, y: 25, filter: 'blur(8px)' },
-          { opacity: 1, scale: 1, y: 0, filter: 'blur(0px)', duration: 2.4, ease: 'power3.out' },
+          { opacity: 0, scale: 0.95, y: 20 },
+          { opacity: 1, scale: 1, y: 0, duration: 1.8, ease: 'power3.out' },
           0
         );
       }
@@ -171,8 +171,8 @@ export default function SlideCarousel() {
       if (heroFadeEls.length > 0) {
         tl.fromTo(heroFadeEls,
           { opacity: 0 },
-          { opacity: 1, duration: 2.5, stagger: 0.4, ease: 'power2.inOut' },
-          1.4
+          { opacity: 1, duration: 1.8, stagger: 0.3, ease: 'power2.inOut' },
+          1.0
         );
         const bottomRow = heroFadeEls[0]?.parentElement;
         if (bottomRow) {
@@ -183,7 +183,7 @@ export default function SlideCarousel() {
       tl.call(() => {
         if (heroName) {
           gsap.to(heroName, {
-            y: -6, duration: 5, yoyo: true, repeat: -1, ease: 'sine.inOut',
+            y: -5, duration: 4, yoyo: true, repeat: -1, ease: 'sine.inOut',
           });
         }
       });
@@ -219,7 +219,7 @@ export default function SlideCarousel() {
       scrollTrigger: {
         trigger: wrapper,
         pin: true,
-        scrub: 2,
+        scrub: 1,
         end: () => `+=${totalWidth}`,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
@@ -240,7 +240,7 @@ export default function SlideCarousel() {
           x: -60, ease: 'none',
           scrollTrigger: {
             trigger: el, containerAnimation: tween,
-            start: 'left right', end: 'right left', scrub: 2,
+            start: 'left right', end: 'right left', scrub: 1,
           },
         });
       });
@@ -250,7 +250,7 @@ export default function SlideCarousel() {
           x: 45, ease: 'none',
           scrollTrigger: {
             trigger: el, containerAnimation: tween,
-            start: 'left right', end: 'right left', scrub: 2,
+            start: 'left right', end: 'right left', scrub: 1,
           },
         });
       });
@@ -260,7 +260,7 @@ export default function SlideCarousel() {
           x: -30, y: 10, ease: 'none',
           scrollTrigger: {
             trigger: el, containerAnimation: tween,
-            start: 'left right', end: 'right left', scrub: 3,
+            start: 'left right', end: 'right left', scrub: 1.5,
           },
         });
       });
@@ -296,7 +296,7 @@ export default function SlideCarousel() {
         gsap.to(el, {
           y: -40, ease: 'none',
           scrollTrigger: {
-            trigger: el, start: 'top bottom', end: 'bottom top', scrub: 2,
+            trigger: el, start: 'top bottom', end: 'bottom top', scrub: 1,
           },
         });
       });
@@ -305,7 +305,7 @@ export default function SlideCarousel() {
         gsap.to(el, {
           y: 30, ease: 'none',
           scrollTrigger: {
-            trigger: el, start: 'top bottom', end: 'bottom top', scrub: 2,
+            trigger: el, start: 'top bottom', end: 'bottom top', scrub: 1,
           },
         });
       });
@@ -314,7 +314,7 @@ export default function SlideCarousel() {
         gsap.to(el, {
           y: -20, x: 8, ease: 'none',
           scrollTrigger: {
-            trigger: el, start: 'top bottom', end: 'bottom top', scrub: 3,
+            trigger: el, start: 'top bottom', end: 'bottom top', scrub: 1.5,
           },
         });
       });

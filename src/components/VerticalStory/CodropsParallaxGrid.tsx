@@ -42,7 +42,7 @@ export default function CodropsParallaxGrid() {
             trigger: grid,
             start: 'top bottom',
             end: 'bottom top',
-            scrub: 2
+            scrub: 1
           }
         });
       });
@@ -62,7 +62,7 @@ export default function CodropsParallaxGrid() {
               trigger: parent,
               start: 'top bottom',
               end: 'bottom top',
-              scrub: 2
+              scrub: 1
             }
           }
         );

@@ -75,18 +75,18 @@ export default function VerticalStory() {
           gsap.fromTo(kanji,
             { opacity: 0, clipPath: 'inset(100% 0 0 0)' },
             { opacity: 0.05, clipPath: 'inset(0% 0 0 0)', ease: 'none',
-              scrollTrigger: { trigger: section, start: 'top 85%', end: 'top 15%', scrub: 3 }
+              scrollTrigger: { trigger: section, start: 'top 85%', end: 'top 15%', scrub: 1.5 }
             }
           );
         }
 
-        // Title ink-spread reveal with blur
+        // Title reveal
         const title = section.querySelector('[data-vs-title]');
         if (title) {
           gsap.fromTo(title,
-            { filter: 'blur(16px)', opacity: 0, y: 15 },
-            { filter: 'blur(0px)', opacity: 1, y: 0, ease: 'none',
-              scrollTrigger: { trigger: title, start: 'top 92%', end: 'top 50%', scrub: 2.5 }
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, ease: 'none',
+              scrollTrigger: { trigger: title, start: 'top 90%', end: 'top 55%', scrub: 1 }
             }
           );
         }
@@ -103,16 +103,16 @@ export default function VerticalStory() {
         }
       });
 
-      /* --- Hero Reveal — cinematic, dreamy --- */
+      /* --- Hero Reveal --- */
       const heroTl = gsap.timeline({
         scrollTrigger: {
           trigger: '#vs-hero',
           start: 'top top',
           end: 'bottom top',
-          scrub: 2.5
+          scrub: 1.5
         }
       });
-      heroTl.to('[data-vs-hero-name]', { y: -60, opacity: 0, scale: 0.97, filter: 'blur(6px)', ease: 'none' });
+      heroTl.to('[data-vs-hero-name]', { y: -50, opacity: 0, scale: 0.98, ease: 'none' });
       heroTl.to('#vs-hero .heroBg', { opacity: 0, ease: 'none' }, 0);
 
       /* --- Footer shifting reveal --- */
@@ -169,7 +169,7 @@ export default function VerticalStory() {
           <div className={styles.verticalTitle} data-vs-fade>ABOUT ME</div>
 
           <div className={styles.aboutPortrait} onClick={() => setModalOpen(true)}>
-            <img src="/images/about-photo.jpg" alt="Akshan Khan" className={styles.aboutPortraitImg} />
+            <img src="/ME.jpeg" alt="Akshan Khan" className={styles.aboutPortraitImg} />
             <div className={styles.aboutPortraitOverlay}>
               <span className={styles.aboutPortraitText}>View Profile</span>
             </div>
@@ -301,7 +301,7 @@ export default function VerticalStory() {
           <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
             <button className={styles.modalClose} onClick={() => setModalOpen(false)}>✕</button>
             <div className={styles.modalGrid}>
-              <div className={styles.modalPhoto}><img src="/images/about-photo.jpg" alt="Akshan Khan" /></div>
+              <div className={styles.modalPhoto}><img src="/ME.jpeg" alt="Akshan Khan" /></div>
               <div className={styles.modalContent}>
                 <h2 className={styles.modalName}>Akshan Khan</h2>
                 <p className={styles.modalText}>Based in Kota, India. I build high-fidelity web experiences and capture cinematic photography.</p>
