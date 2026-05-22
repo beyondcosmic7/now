@@ -4,8 +4,8 @@ import React from 'react';
 import styles from './PhilosophySlide.module.css';
 import FloatingBlob from '../FloatingBlob/FloatingBlob';
 
-const PHOTOS_1 = ['/lens-1.jpg', '/lens-2.jpg', '/lens-3.jpg', '/lens-4.jpg'];
-const PHOTOS_2 = ['/lens-5.jpg', '/lens-6.jpg', '/lens-7.jpg', '/lens-8.jpg'];
+const PHOTOS_1 = ['/img/photo-01.jpg', '/img/photo-05.jpg', '/img/photo-03.jpg', '/img/photo-11.jpg'];
+const PHOTOS_2 = ['/img/photo-12.jpg', '/img/photo-07.jpg', '/img/photo-06.jpg', '/img/photo-10.jpg'];
 
 export default function PhilosophySlide() {
   return (

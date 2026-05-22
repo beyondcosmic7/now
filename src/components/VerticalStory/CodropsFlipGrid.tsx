@@ -8,13 +8,13 @@ import styles from './CodropsFlipGrid.module.css';
 gsap.registerPlugin(ScrollTrigger);
 
 const WORKS_DATA = [
-  { id: 1, title: 'ZEN GARDEN', img: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=800&auto=format&fit=crop' },
-  { id: 2, title: 'MINIMAL SPACES', img: 'https://images.unsplash.com/photo-1578507065211-1c4e99a5fd24?q=80&w=800&auto=format&fit=crop' },
-  { id: 3, title: 'INK WASH', img: 'https://images.unsplash.com/photo-1492571350019-22de08371fd3?q=80&w=800&auto=format&fit=crop' },
-  { id: 4, title: 'BONSAI FORM', img: 'https://images.unsplash.com/photo-1515488764276-beab7607c1e6?q=80&w=800&auto=format&fit=crop' },
-  { id: 5, title: 'WABI SABI', img: 'https://images.unsplash.com/photo-1612438214708-f428a707dd4e?q=80&w=800&auto=format&fit=crop' },
-  { id: 6, title: 'SHADOW PLAY', img: 'https://images.unsplash.com/photo-1545042679-41d22b2ca130?q=80&w=800&auto=format&fit=crop' },
-  { id: 7, title: 'CHERRY BLOSSOM', img: 'https://images.unsplash.com/photo-1490730141103-6cac27aaab94?q=80&w=800&auto=format&fit=crop' }
+  { id: 1, title: 'STILLNESS', img: '/img/1.jpg' },
+  { id: 2, title: 'FRAGMENTS', img: '/img/2.jpg' },
+  { id: 3, title: 'INK WASH', img: '/img/3.jpg' },
+  { id: 4, title: 'GOLDEN HOUR', img: '/img/4.jpg' },
+  { id: 5, title: 'WABI SABI', img: '/img/5.jpg' },
+  { id: 6, title: 'SHADOW PLAY', img: '/img/6.jpg' },
+  { id: 7, title: 'PASSAGE', img: '/img/7.jpg' }
 ];
 
 export default function CodropsFlipGrid() {

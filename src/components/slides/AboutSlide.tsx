@@ -80,7 +80,7 @@ export default function AboutSlide({ containerAnimation }: AboutSlideProps) {
         aria-label="View full profile"
       >
         <img
-          src="/ME.jpeg"
+          src="/images/about-photo.jpg"
           alt="Akshan Khan"
           className={styles.fullPortrait}
           loading="lazy"
@@ -106,7 +106,7 @@ export default function AboutSlide({ containerAnimation }: AboutSlideProps) {
             <div className={styles.modalGrid}>
               {/* Left — Large photo */}
               <div className={styles.modalPhoto}>
-                <img src="/ME.jpeg" alt="Akshan Khan" />
+                <img src="/images/about-photo.jpg" alt="Akshan Khan" />
               </div>
 
               {/* Right — Bio info */}

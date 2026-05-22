@@ -24,8 +24,8 @@ const PROJECTS = [
   { num: '02', title: 'ElectiQ', type: 'Corporate / Branding', url: 'https://electiq-in.vercel.app/', image: '/electiq.png', year: '2024' },
   { num: '03', title: 'TVA', type: 'Creative Agency / Portfolio', url: 'https://tva-v1.vercel.app/', image: '/tva.png', year: '2024' },
 ];
-const PHOTOS_1 = ['/lens-1.jpg', '/lens-2.jpg', '/lens-3.jpg', '/lens-4.jpg'];
-const PHOTOS_2 = ['/lens-5.jpg', '/lens-6.jpg', '/lens-7.jpg', '/lens-8.jpg'];
+const PHOTOS_1 = ['/img/photo-01.jpg', '/img/photo-05.jpg', '/img/photo-03.jpg', '/img/photo-11.jpg'];
+const PHOTOS_2 = ['/img/photo-12.jpg', '/img/photo-07.jpg', '/img/photo-06.jpg', '/img/photo-10.jpg'];
 
 const LINK_TO_SECTION: Record<string, string> = {
   0: '#vs-hero',
@@ -169,7 +169,7 @@ export default function VerticalStory() {
           <div className={styles.verticalTitle} data-vs-fade>ABOUT ME</div>
 
           <div className={styles.aboutPortrait} onClick={() => setModalOpen(true)}>
-            <img src="/ME.jpeg" alt="Akshan Khan" className={styles.aboutPortraitImg} />
+            <img src="/images/about-photo.jpg" alt="Akshan Khan" className={styles.aboutPortraitImg} />
             <div className={styles.aboutPortraitOverlay}>
               <span className={styles.aboutPortraitText}>View Profile</span>
             </div>
@@ -301,7 +301,7 @@ export default function VerticalStory() {
           <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
             <button className={styles.modalClose} onClick={() => setModalOpen(false)}>✕</button>
             <div className={styles.modalGrid}>
-              <div className={styles.modalPhoto}><img src="/ME.jpeg" alt="Akshan Khan" /></div>
+              <div className={styles.modalPhoto}><img src="/images/about-photo.jpg" alt="Akshan Khan" /></div>
               <div className={styles.modalContent}>
                 <h2 className={styles.modalName}>Akshan Khan</h2>
                 <p className={styles.modalText}>Based in Kota, India. I build high-fidelity web experiences and capture cinematic photography.</p>

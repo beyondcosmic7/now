@@ -7,19 +7,19 @@ import styles from './CodropsParallaxGrid.module.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const WABI_SABI_IMAGES = [
-  "https://images.unsplash.com/photo-1528164344705-47542687000d?q=80&w=800&auto=format&fit=crop", 
-  "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?q=80&w=800&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1578507065211-1c4e99a5fd24?q=80&w=800&auto=format&fit=crop", 
-  "https://images.unsplash.com/photo-1515488764276-beab7607c1e6?q=80&w=800&auto=format&fit=crop", 
-  "https://images.unsplash.com/photo-1612438214708-f428a707dd4e?q=80&w=800&auto=format&fit=crop", 
-  "https://images.unsplash.com/photo-1492571350019-22de08371fd3?q=80&w=800&auto=format&fit=crop", 
-  "https://images.unsplash.com/photo-1545042679-41d22b2ca130?q=80&w=800&auto=format&fit=crop", 
-  "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?q=80&w=800&auto=format&fit=crop", 
+// User's real photography — local assets
+const ALL_PHOTOS = [
+  '/img/1.jpg', '/img/2.jpg', '/img/3.jpg', '/img/4.jpg',
+  '/img/5.jpg', '/img/6.jpg', '/img/7.jpg', '/img/8.jpg', '/img/9.jpg',
+  '/img/photo-01.jpg', '/img/photo-02.jpg', '/img/photo-03.jpg',
+  '/img/photo-04.jpg', '/img/photo-05.jpg', '/img/photo-06.jpg',
+  '/img/photo-07.jpg', '/img/photo-08.jpg', '/img/photo-09.jpg',
+  '/img/photo-10.jpg', '/img/photo-11.jpg', '/img/photo-12.jpg',
+  '/img/photo-13.jpg',
 ];
 
-// Generate an array of 24 images by repeating the Wabi Sabi array
-const IMAGES = Array.from({ length: 24 }).map((_, i) => WABI_SABI_IMAGES[i % WABI_SABI_IMAGES.length]);
+// Generate 24 images cycling through the pool
+const IMAGES = Array.from({ length: 24 }).map((_, i) => ALL_PHOTOS[i % ALL_PHOTOS.length]);
 
 export default function CodropsParallaxGrid() {
   const gridRef = useRef<HTMLDivElement>(null);
